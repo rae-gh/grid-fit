@@ -3,11 +3,17 @@
 #include <vector>
 
 // Hard-coded 8x8 matrix (row-major, all zeros)
-const float mat[64] = {1,  0, 0,  0,  0,  0,  0,  0,  -1, 1,  0,  0,  0,
-                       0,  0, 0,  -1, 0,  1,  0,  0,  0,  0,  0,  1,  -1,
-                       -1, 1, 0,  0,  0,  0,  -1, 0,  0,  0,  1,  0,  0,
-                       0,  1, -1, 0,  0,  -1, 1,  0,  0,  1,  0,  -1, 0,
-                       -1, 0, 1,  0,  -1, 1,  1,  -1, 1,  -1, -1, 1};
+// clang-format off
+const float mat[64] = {
+     1., 0., 0., 0., 0., 0., 0., 0., 
+    -1., 1., 0., 0., 0., 0., 0., 0.,
+    -1., 0., 1., 0., 0., 0., 0., 0., 
+     1.,-1.,-1., 1., 0., 0., 0., 0.,
+    -1., 0., 0., 0., 1., 0., 0., 0., 
+     1.,-1., 0., 0.,-1., 1., 0., 0.,
+     1., 0.,-1., 0.,-1., 0., 1., 0., 
+    -1., 1., 1.,-1., 1.,-1.,-1., 1.};
+// clang-format on
 
 std::vector<float> interp(double a, double b, int n) {
   std::vector<float> result;
@@ -63,14 +69,14 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     float v111 = values[ixu * ny * nz + iyu * nz + izu];
     // declare corner values array
     float corner_values[8];
-    corner_values[7] = v000;
-    corner_values[6] = v100;
-    corner_values[5] = v010;
-    corner_values[4] = v001;
-    corner_values[3] = v110;
-    corner_values[2] = v101;
-    corner_values[1] = v011;
-    corner_values[0] = v111;
+    corner_values[0] = v000;
+    corner_values[1] = v100;
+    corner_values[2] = v010;
+    corner_values[3] = v001;
+    corner_values[4] = v110;
+    corner_values[5] = v101;
+    corner_values[6] = v011;
+    corner_values[7] = v111;
 
     // printf("  8 corners: %g %g %g %g %g %g %g %g\n",
     //  v000, v100, v010, v001, v110, v101, v011, v111);

@@ -18,16 +18,26 @@ def benchmark_trilinear(n=20, n_points=100):
     x = np.arange(n)
     y = np.arange(n)
     z = np.arange(n)
-    values = np.random.rand(n, n, n)
+    # values = np.random.rand(n, n, n)
+    values = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 
-    # Generate random query points (shared for both), scaled to [0, n]
-    points = np.random.rand(n_points, 3) * (n - 1)
+    # Specify fixed query points for controlled testing
+    points = np.array(
+        [
+            [0.0, 0.0, 0.0],  # Should return 1
+            [1.0, 1.0, 1.0],  # Should return 8
+            [0.5, 0.5, 0.5],  # Should interpolate to the center
+        ]
+    )
+    n_points = len(points)
 
-    # print(x)
-    # print(y)
-    # print(z)
-    # print(values)
-    # print(points)
+    print(x)
+    print(y)
+    print(z)
+    print("--- Values ---")
+    print(values)
+    print("--- Points ---")
+    print(points)
 
     print(
         f"Benchmarking trilinear interpolation with grid size {n}^3 and {n_points} points."
