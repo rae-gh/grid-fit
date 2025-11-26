@@ -1,71 +1,77 @@
+
 # Development Guide
 
 This page provides instructions for developers working on the grid-fit library.
 
-## 1. Clone the Repository
+## Getting Started (Recommended)
+
+The fastest way to build, install, and test all language bindings (C++, Python, R) is to simply run:
 
 ```bash
-git clone https://github.com/rae-gh/grid-fit.git
-cd grid-fit
+./install.sh
 ```
 
-## 2. Set Up Conda Environment
+This script will:
+- Clean previous builds
+- Build the C++ core
+- Build and install the Python and R bindings
+- Run example scripts for C++, Python, and R
+- Print output from all three so you know everything works
 
-Create and activate a conda environment for development:
+**If you see output from all three languages, your setup is correct!**
 
-```bash
-conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 -y
-conda activate gridfit-dev
-conda install -c conda-forge pybind11 pytest numpy scipy -y
-Rscript -e 'install.packages("devtools")'
-Rscript -e 'devtools::install("R")'
-```
+---
 
-You can add more dependencies to this environment as needed (e.g., pybind11, pytest, etc.).
+## Manual Developer Setup (Advanced)
 
-## 3. Install Python Library in Editable Mode
+If you want to set up a development environment for editing and testing code, follow these steps:
 
-```bash
-python -m pip install -e .
-```
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/rae-gh/grid-fit.git
+   cd grid-fit
+   ```
+2. (Optional) Create and activate a conda environment:
+   ```bash
+   conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 -y
+   conda activate gridfit-dev
+   conda install -c conda-forge pybind11 pytest numpy scipy -y
+   Rscript -e 'install.packages("devtools")'
+   ```
+3. Install the Python package in editable mode:
+   ```bash
+   python -m pip install -e .
+   ```
+4. Build the C++ core and R package as needed (see CMakeLists.txt and R/README).
 
-This allows you to edit the Python code and have changes reflected immediately.
+---
 
-## 4. Build C++ Core and Bindings
-
-Follow the instructions in the README or CMakeLists.txt to build the C++ core and bindings for Python and R.
-
-## 5. Keep R Library Consistent
-
-When updating the C++ core, ensure the R bindings are updated as well. Use the examples in `examples/R/` to test.
-
-## 6. Manual Testing Before Push
+## Manual Testing Before Push
 
 ### Python
 Run the integration tests with pytest:
-
 ```bash
 pytest tests/python
 ```
 
 ### R
 Run the R integration test script:
-
 ```bash
 Rscript tests/R/test_interp.R
 ```
 
 Make sure both tests pass before pushing changes.
 
+---
+
 ## Pre-commit Hooks
 
 This project uses pre-commit hooks to help maintain code quality for Python and C++ files. Hooks will automatically check formatting and linting before each commit.
 
 ### Setup
-
 1. Install pre-commit (if not already):
    ```bash
-   pip install pre-commit
+   python -m pip install pre-commit
    ```
 2. Install the hooks:
    ```bash

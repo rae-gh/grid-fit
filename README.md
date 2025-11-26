@@ -45,7 +45,18 @@ print(result)  # [0.5]
 
 ---
 
-For development instructions, see the documentation or `DEV.md`.
+
+## Developer Onboarding
+
+To build, install, and test all language bindings (C++, Python, R) in one step, run:
+
+```bash
+./install.sh
+```
+
+This script will build everything and run example scripts for all three languages. If you see output from all three, your setup is correct!
+
+For more details, see `DEV.md` or `docs/development.md`.
 
 ```
 
