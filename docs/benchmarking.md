@@ -10,7 +10,7 @@ This page describes how to benchmark the performance of the grid-fit library aga
 
    You can install them with:
    ```bash
-   pip install numpy scipy
+   python -m pip install numpy scipy
    ```
 
 2. Navigate to the `examples/benchmarking/` directory.

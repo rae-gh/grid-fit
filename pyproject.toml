@@ -1,13 +1,52 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=45", "wheel", "pybind11>=2.10.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "gridfit"
 version = "0.1.0"
-description = "Fast N-dimensional polynomial interpolation on regular grids with Python and R bindings."
-authors = [
-  { name = "rae-gh" }
-]
+description = "Fast N-dimensional polynomial interpolation on regular grids using precomputed Alcraft matrices"
 readme = "README.md"
 requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Rachel Alcraft", email = "rachel.alcraft@gmail.com"}
+]
+keywords = ["interpolation", "numerical", "grid", "polynomial", "alcraft"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: C++",
+]
+
+dependencies = [
+    "numpy>=1.20.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "scipy",
+]
+
+[project.urls]
+Homepage = "https://rae-gh.github.io/grid-fit/"
+Documentation = "https://rae-gh.github.io/grid-fit/"
+Repository = "https://github.com/rae-gh/grid-fit"
+"Bug Tracker" = "https://github.com/rae-gh/grid-fit/issues"
+
+[tool.setuptools.packages.find]
+where = ["python"]
+
+[tool.setuptools.package-data]
+gridfit = ["*.so", "*.pyd"]
+
+# Note: C++ extension configuration still requires setup.py for pybind11
+# This is a current limitation - setuptools doesn't fully support extensions in pyproject.toml yet
+
+[tool.pytest.ini_options]
+testpaths = ["python/tests"]
+python_files = "test_*.py"

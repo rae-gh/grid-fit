@@ -23,7 +23,7 @@ You can add more dependencies to this environment as needed (e.g., pybind11, pyt
 ## 3. Install Python Library in Editable Mode
 
 ```bash
-pip install -e .
+python -m pip install -e .
 ```
 
 This allows you to edit the Python code and have changes reflected immediately.

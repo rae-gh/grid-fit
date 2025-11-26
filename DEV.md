@@ -17,13 +17,13 @@ conda activate gridfit-dev
 ```
 
 You can add more dependencies to this environment as needed (e.g., 
-`conda install -c conda-forge pybind11 pytest -y`  
+`conda install -c conda-forge pybind11 pytest numpy scipy -y`  
 , etc.).
 
 ## 3. Install Python Library in Editable Mode
 
 ```bash
-pip install -e .
+python -m pip install -e .
 ```
 
 This allows you to edit the Python code and have changes reflected immediately.
@@ -68,7 +68,7 @@ This project uses pre-commit hooks to help maintain code quality for Python and 
 
 1. Install pre-commit (if not already):
 	```bash
-	pip install pre-commit
+	python -m pip install pre-commit
 	```
 2. Install the hooks:
 	```bash
@@ -76,3 +76,24 @@ This project uses pre-commit hooks to help maintain code quality for Python and 
 	```
 
 Now, every time you commit, black and flake8 will check Python files, and clang-format will check C++ files. You can add more hooks or languages as needed.
+
+## Compiling the C++ Core
+
+To build the C++ core library directly (for development or testing):
+
+1. Create a build directory and navigate into it:
+	```bash
+	mkdir -p build
+	cd build
+	```
+2. Run CMake to configure the project:
+	```bash
+	cmake ..
+	```
+3. Build the library:
+	```bash
+	make
+	```
+
+The compiled library or executable will be placed in the `build/` directory. Adjust CMake options as needed for your platform or development workflow.
+
