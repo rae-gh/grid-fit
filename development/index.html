@@ -316,10 +316,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-clone-the-repository" class="md-nav__link">
+  <a href="#getting-started-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Clone the Repository
+        Getting Started (Recommended)
       
     </span>
   </a>
@@ -327,10 +327,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-set-up-conda-environment" class="md-nav__link">
+  <a href="#manual-developer-setup-advanced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Set Up Conda Environment
+        Manual Developer Setup (Advanced)
       
     </span>
   </a>
@@ -338,48 +338,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-install-python-library-in-editable-mode" class="md-nav__link">
+  <a href="#manual-testing-before-push" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Install Python Library in Editable Mode
+        Manual Testing Before Push
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-build-c-core-and-bindings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Build C++ Core and Bindings
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-keep-r-library-consistent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Keep R Library Consistent
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-manual-testing-before-push" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. Manual Testing Before Push
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Manual Testing Before Push">
+    <nav class="md-nav" aria-label="Manual Testing Before Push">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -499,10 +466,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-clone-the-repository" class="md-nav__link">
+  <a href="#getting-started-recommended" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Clone the Repository
+        Getting Started (Recommended)
       
     </span>
   </a>
@@ -510,10 +477,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-set-up-conda-environment" class="md-nav__link">
+  <a href="#manual-developer-setup-advanced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Set Up Conda Environment
+        Manual Developer Setup (Advanced)
       
     </span>
   </a>
@@ -521,48 +488,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-install-python-library-in-editable-mode" class="md-nav__link">
+  <a href="#manual-testing-before-push" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Install Python Library in Editable Mode
+        Manual Testing Before Push
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-build-c-core-and-bindings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Build C++ Core and Bindings
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-keep-r-library-consistent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Keep R Library Consistent
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-manual-testing-before-push" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. Manual Testing Before Push
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Manual Testing Before Push">
+    <nav class="md-nav" aria-label="Manual Testing Before Push">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -639,43 +573,54 @@
 
 <h1 id="development-guide">Development Guide</h1>
 <p>This page provides instructions for developers working on the grid-fit library.</p>
-<h2 id="1-clone-the-repository">1. Clone the Repository</h2>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/rae-gh/grid-fit.git
-<span class="nb">cd</span><span class="w"> </span>grid-fit
+<h2 id="getting-started-recommended">Getting Started (Recommended)</h2>
+<p>The fastest way to build, install, and test all language bindings (C++, Python, R) is to simply run:</p>
+<div class="highlight"><pre><span></span><code>./install.sh
 </code></pre></div>
-<h2 id="2-set-up-conda-environment">2. Set Up Conda Environment</h2>
-<p>Create and activate a conda environment for development:</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>gridfit-dev<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gxx_linux-64<span class="w"> </span>-y
+<p>This script will:
+- Clean previous builds
+- Build the C++ core
+- Build and install the Python and R bindings
+- Run example scripts for C++, Python, and R
+- Print output from all three so you know everything works</p>
+<p><strong>If you see output from all three languages, your setup is correct!</strong></p>
+<hr />
+<h2 id="manual-developer-setup-advanced">Manual Developer Setup (Advanced)</h2>
+<p>If you want to set up a development environment for editing and testing code, follow these steps:</p>
+<ol>
+<li>Clone the repository:
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/rae-gh/grid-fit.git
+<span class="nb">cd</span><span class="w"> </span>grid-fit
+</code></pre></div></li>
+<li>(Optional) Create and activate a conda environment:
+   <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>gridfit-dev<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gxx_linux-64<span class="w"> </span>-y
 conda<span class="w"> </span>activate<span class="w"> </span>gridfit-dev
 conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>pybind11<span class="w"> </span>pytest<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>-y
 Rscript<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;install.packages(&quot;devtools&quot;)&#39;</span>
-Rscript<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;devtools::install(&quot;R&quot;)&#39;</span>
-</code></pre></div>
-<p>You can add more dependencies to this environment as needed (e.g., pybind11, pytest, etc.).</p>
-<h2 id="3-install-python-library-in-editable-mode">3. Install Python Library in Editable Mode</h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-</code></pre></div>
-<p>This allows you to edit the Python code and have changes reflected immediately.</p>
-<h2 id="4-build-c-core-and-bindings">4. Build C++ Core and Bindings</h2>
-<p>Follow the instructions in the README or CMakeLists.txt to build the C++ core and bindings for Python and R.</p>
-<h2 id="5-keep-r-library-consistent">5. Keep R Library Consistent</h2>
-<p>When updating the C++ core, ensure the R bindings are updated as well. Use the examples in <code>examples/R/</code> to test.</p>
-<h2 id="6-manual-testing-before-push">6. Manual Testing Before Push</h2>
+</code></pre></div></li>
+<li>Install the Python package in editable mode:
+   <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div></li>
+<li>Build the C++ core and R package as needed (see CMakeLists.txt and R/README).</li>
+</ol>
+<hr />
+<h2 id="manual-testing-before-push">Manual Testing Before Push</h2>
 <h3 id="python">Python</h3>
-<p>Run the integration tests with pytest:</p>
+<p>Run the integration tests with pytest:
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/python
-</code></pre></div>
+</code></pre></div></p>
 <h3 id="r">R</h3>
-<p>Run the R integration test script:</p>
+<p>Run the R integration test script:
 <div class="highlight"><pre><span></span><code>Rscript<span class="w"> </span>tests/R/test_interp.R
-</code></pre></div>
+</code></pre></div></p>
 <p>Make sure both tests pass before pushing changes.</p>
+<hr />
 <h2 id="pre-commit-hooks">Pre-commit Hooks</h2>
 <p>This project uses pre-commit hooks to help maintain code quality for Python and C++ files. Hooks will automatically check formatting and linting before each commit.</p>
 <h3 id="setup">Setup</h3>
 <ol>
 <li>Install pre-commit (if not already):
-   <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
+   <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
 </code></pre></div></li>
 <li>Install the hooks:
    <div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>install
