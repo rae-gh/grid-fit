@@ -1,6 +1,7 @@
 site_name: grid-fit Documentation
 nav:
   - Home: docs/index.md
+  - Bindings: docs/bindings.md
 theme:
   name: material
   palette:
