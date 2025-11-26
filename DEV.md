@@ -1,15 +1,27 @@
 
 # Developer Onboarding & Setup for grid-fit
 
+
 ## Getting Started (Recommended)
 
-The fastest way to build, install, and test all language bindings (C++, Python, R) is to simply run:
+1. **Clone the repository:**
+	```bash
+	git clone https://github.com/rae-gh/grid-fit.git
+	cd grid-fit
+	```
+2. **(Recommended) Create and activate a conda environment:**
+	```bash
+	conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 -y
+	conda activate gridfit-dev
+	conda install -c conda-forge pybind11 pytest numpy scipy -y
+	Rscript -e 'install.packages("devtools")'
+	```
+3. **Run the install script:**
+	```bash
+	./install.sh
+	```
 
-```bash
-./install.sh
-```
-
-This script will:
+The `install.sh` script will:
 - Clean previous builds
 - Build the C++ core
 - Build and install the Python and R bindings

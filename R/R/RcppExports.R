@@ -5,3 +5,7 @@ interp_rcpp <- function(a, b, n) {
     .Call('_gridfit_interp_rcpp', PACKAGE = 'gridfit', a, b, n)
 }
 
+trilinear_rcpp <- function(x, y, z, values, points) {
+    .Call('_gridfit_trilinear_rcpp', PACKAGE = 'gridfit', x, y, z, values, points)
+}
+

@@ -1,3 +1,4 @@
 useDynLib(gridfit)
 importFrom(Rcpp, evalCpp)
 export(interp_rcpp)
+export(trilinear_rcpp)

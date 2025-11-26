@@ -23,9 +23,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// trilinear_rcpp
+Rcpp::NumericVector trilinear_rcpp(Rcpp::NumericVector x, Rcpp::NumericVector y, Rcpp::NumericVector z, Rcpp::NumericVector values, Rcpp::NumericMatrix points);
+RcppExport SEXP _gridfit_trilinear_rcpp(SEXP xSEXP, SEXP ySEXP, SEXP zSEXP, SEXP valuesSEXP, SEXP pointsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type y(ySEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type z(zSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type values(valuesSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type points(pointsSEXP);
+    rcpp_result_gen = Rcpp::wrap(trilinear_rcpp(x, y, z, values, points));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_gridfit_interp_rcpp", (DL_FUNC) &_gridfit_interp_rcpp, 3},
+    {"_gridfit_trilinear_rcpp", (DL_FUNC) &_gridfit_trilinear_rcpp, 5},
     {NULL, NULL, 0}
 };
 

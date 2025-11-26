@@ -1,30 +1,9 @@
-// Example usage of the gridfit C++ core
+// Example usage of the gridfit C++ trilinear function
 #include <iostream>
 #include <vector>
-
-#include <chrono>
 #include "../../include/interp.h"
 
 int main() {
-    int n = 10000000;
-    // Warm up
-    auto warmup = interp(0.0, 1.0, n);
-
-    auto start = std::chrono::high_resolution_clock::now();
-    auto result = interp(0.0, 1.0, n);
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-
-    if (!result.empty()) {
-        std::cout << "n: " << result.size()
-                  << ", First: " << result.front()                  
-                  << ", Last: " << result.back() << std::endl;
-    } else {
-        std::cout << "No points returned." << std::endl;
-    }
-    std::cout << "Time taken: " << elapsed.count() << " seconds" << std::endl;
-
-    // Example usage of dummy trilinear
     std::vector<float> x = {0.0f, 1.0f};
     std::vector<float> y = {0.0f, 1.0f};
     std::vector<float> z = {0.0f, 1.0f};
@@ -41,6 +20,5 @@ int main() {
     std::cout << "trilinear dummy output: ";
     for (auto v : tri_result) std::cout << v << " ";
     std::cout << std::endl;
-
     return 0;
 }
