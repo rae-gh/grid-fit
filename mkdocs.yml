@@ -6,3 +6,12 @@ theme:
   name: material
   palette:
     primary: blue
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.details
+
+plugins:
+  - search
+  - mermaid2
