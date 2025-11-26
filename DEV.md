@@ -12,8 +12,11 @@ cd grid-fit
 Create and activate a conda environment for development:
 
 ```bash
-conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 pytest pybind11 -y
+conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 -y
 conda activate gridfit-dev
+conda install -c conda-forge pybind11 pytest numpy scipy -y
+Rscript -e 'install.packages("devtools")'
+Rscript -e 'devtools::install("R")'
 ```
 
 You can add more dependencies to this environment as needed (e.g., 

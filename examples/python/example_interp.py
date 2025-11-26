@@ -2,5 +2,14 @@
 import gridfit
 
 # Interpolate between 0 and 1 with 1 interval
-result = gridfit.interp(0, 1, 1)
-print("Interpolated points:", result)
+import time
+
+n = 10000000
+start = time.time()
+result = gridfit.interp(0, 1, n)
+elapsed = time.time() - start
+if result:
+	print(f"First: {result[0]}, Last: {result[-1]}, Count: {len(result)}")
+else:
+	print("No points returned.")
+print(f"Time taken: {elapsed:.6f} seconds")

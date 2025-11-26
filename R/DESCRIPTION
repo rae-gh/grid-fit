@@ -1,4 +1,4 @@
-Package: gridfitInterp
+Package: gridfit
 Type: Package
 Title: Linear Interpolation Wrapper
 Version: 0.1.0

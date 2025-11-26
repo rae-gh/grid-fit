@@ -23,6 +23,7 @@ To build and run the C++ test in `tests/cpp/test_interp.cpp`:
 	```bash
 	./test_interp
 	```
+    tests/cpp/test_interp
 
 This will compile and run the test, printing the output of the interp function.
 ---

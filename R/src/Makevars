@@ -1,2 +1,4 @@
-PKG_CXXFLAGS = -I../include
-PKG_LIBS =
+
+# Use absolute path for include and link to static library
+PKG_CPPFLAGS = -I/home/rachel/PHD/UTILS/grid-fit/include
+PKG_LIBS = /home/rachel/PHD/UTILS/grid-fit/lib/libgridfit.a

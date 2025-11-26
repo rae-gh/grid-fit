@@ -1,4 +1,4 @@
 #pragma once
 #include <vector>
 
-std::vector<float> interp(float a, float b, int n);
+std::vector<float> interp(double a, double b, int n);

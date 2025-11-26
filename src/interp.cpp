@@ -1,7 +1,7 @@
 #include "interp.h"
 #include <vector>
 
-std::vector<float> interp(float a, float b, int n) {
+std::vector<float> interp(double a, double b, int n) {
     std::vector<float> result;
     if (n <= 0) return result;
     float step = (b - a) / (n + 1);
