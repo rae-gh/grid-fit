@@ -550,14 +550,14 @@
 <h1 id="grid-fit-documentation">grid-fit Documentation</h1>
 <h2 id="installation">Installation</h2>
 <h3 id="python">Python</h3>
-<p>You can install the Python bindings using pip (after building):</p>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
+<p>Install directly from GitHub:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/rae-gh/grid-fit.git
 </code></pre></div>
 <h3 id="r">R</h3>
-<p>You can install the R package using devtools (after building):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># In R</span>
-<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
-<span class="n">devtools</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="s">&quot;path/to/grid-fit&quot;</span><span class="p">)</span>
+<p>Install directly from GitHub using devtools:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">devtools</span><span class="p">)</span>
+<span class="nf">install_url</span><span class="p">(</span><span class="s">&quot;https://github.com/rae-gh/grid-fit/archive/refs/heads/main.zip&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="usage-example">Usage Example</h2>
 <h3 id="python_1">Python</h3>
