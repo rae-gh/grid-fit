@@ -12,11 +12,13 @@ cd grid-fit
 Create and activate a conda environment for development:
 
 ```bash
-conda create -n gridfit-dev python=3.10 cmake make gxx_linux-64 -y
+conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 pytest pybind11 -y
 conda activate gridfit-dev
 ```
 
-You can add more dependencies to this environment as needed (e.g., pybind11, pytest, etc.).
+You can add more dependencies to this environment as needed (e.g., 
+`conda install -c conda-forge pybind11 pytest -y`  
+, etc.).
 
 ## 3. Install Python Library in Editable Mode
 

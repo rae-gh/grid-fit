@@ -3,6 +3,7 @@ nav:
   - Home: index.md
   - Bindings: bindings.md
   - Development: development.md
+  - Benchmarking: benchmarking.md
 theme:
   name: material
   palette:

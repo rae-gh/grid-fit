@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gridfit"
+version = "0.1.0"
+description = "Fast N-dimensional polynomial interpolation on regular grids with Python and R bindings."
+authors = [
+  { name = "rae-gh" }
+]
+readme = "README.md"
+requires-python = ">=3.7"
