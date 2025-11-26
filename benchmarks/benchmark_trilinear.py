@@ -7,19 +7,27 @@ import timeit
 # from gridfit import trilinear
 
 
-def benchmark_trilinear(n=200, n_points=100000):
+def benchmark_trilinear(n=20, n_points=100):
     """
     n: grid size in each dimension (int)
     n_points: number of random query points (int)
     """
     # Create a regular 3D grid (0 to n)
-    x = np.linspace(0, n, n)
-    y = np.linspace(0, n, n)
-    z = np.linspace(0, n, n)
+    n = 2
+    n_points = 2
+    x = np.arange(n)
+    y = np.arange(n)
+    z = np.arange(n)
     values = np.random.rand(n, n, n)
 
     # Generate random query points (shared for both), scaled to [0, n]
-    points = np.random.rand(n_points, 3) * n
+    points = np.random.rand(n_points, 3) * (n - 1)
+
+    # print(x)
+    # print(y)
+    # print(z)
+    # print(values)
+    # print(points)
 
     print(
         f"Benchmarking trilinear interpolation with grid size {n}^3 and {n_points} points."
@@ -28,7 +36,9 @@ def benchmark_trilinear(n=200, n_points=100000):
     # Time scipy: include setup (interpolator creation) and evaluation
     def scipy_run():
         interp = RegularGridInterpolator((x, y, z), values)
-        return interp(points)
+        result = interp(points)
+        print("scipy_run returned:", result)
+        return result
 
     t_scipy = timeit.timeit(scipy_run, number=10)
     print(
@@ -38,7 +48,9 @@ def benchmark_trilinear(n=200, n_points=100000):
     # Time gridfit: include setup if any (for fairness, same as scipy)
     def gridfit_run():
         # If trilinear has setup, put it here; otherwise just call
-        return trilinear(x, y, z, values, points)
+        result = trilinear(x, y, z, values, points)
+        print("gridfit_run returned:", result)
+        return result
 
     t_gridfit = timeit.timeit(gridfit_run, number=10)
     print(f"gridfit trilinear: {t_gridfit:.4f} s (10x)")
@@ -68,14 +80,14 @@ if __name__ == "__main__":
         description="Benchmark trilinear interpolation (scipy vs gridfit)"
     )
     parser.add_argument(
-        "-n", type=int, default=200, help="Grid size in each dimension (default: 20)"
+        "-n", type=int, default=20, help="Grid size in each dimension (default: 20)"
     )
     parser.add_argument(
         "-p",
         "--points",
         type=int,
-        default=100000,
-        help="Number of query points (default: 10000)",
+        default=20,
+        help="Number of query points (default: 20)",
     )
     args = parser.parse_args()
     benchmark_trilinear(n=args.n, n_points=args.points)
