@@ -1,18 +1,6 @@
 
 # Bindings: How C++ Compiling Works for Python and R
 
-## Overview Diagram
-
-```mermaid
-flowchart TD
-	A[C++ Source Code] -->|Compile with CMake/pybind11| B(Python Shared Library .so)
-	A -->|Compile with CMake/Rcpp| C(R Shared Library .so)
-	B -->|Install with pip| D[Python Package]
-	C -->|Install with devtools| E[R Package]
-	D -->|import gridfit| F[Python User]
-	E -->|library(gridfit)| G[R User]
-```
-
 ## C++ Core Development
 You write and edit your C++ code (e.g., in `src/`).
 

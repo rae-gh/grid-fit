@@ -4,16 +4,19 @@ nav:
   - Bindings: bindings.md
   - Development: development.md
   - Benchmarking: benchmarking.md
+
 theme:
   name: material
   palette:
     primary: blue
   favicon: gridfit_icon.png
-  logo: gridfit_icon.png 
+  logo: gridfit_icon.png
+
 
 plugins:
   - search
   - mermaid2
+
 
 markdown_extensions:
   - pymdownx.superfences
@@ -32,13 +35,7 @@ markdown_extensions:
   - pymdownx.arithmatex
   - pymdownx.betterem
   - pymdownx.magiclink
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
 
-extra_javascript:
-  - https://unpkg.com/mermaid@10.4.0/dist/mermaid.min.js
+
 
 
