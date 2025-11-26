@@ -7,6 +7,8 @@ theme:
   name: material
   palette:
     primary: blue
+  favicon: gridfit_icon.png
+  logo: gridfit_icon.png 
 
 plugins:
   - search
