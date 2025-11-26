@@ -14,19 +14,19 @@
         
       
       
-      <link rel="icon" href="/assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>grid-fit Documentation</title>
+        <title>Bindings: How C++ Compiling Works for Python and R - grid-fit Documentation</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="/assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -45,7 +45,7 @@
       
     
     
-    <script>__md_scope=new URL("/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -67,6 +67,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#bindings-how-c-compiling-works-for-python-and-r" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -79,7 +84,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/." title="grid-fit Documentation" class="md-header__button md-logo" aria-label="grid-fit Documentation" data-md-component="logo">
+    <a href=".." title="grid-fit Documentation" class="md-header__button md-logo" aria-label="grid-fit Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -99,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Bindings: How C++ Compiling Works for Python and R
             
           </span>
         </div>
@@ -177,7 +182,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/." title="grid-fit Documentation" class="md-nav__button md-logo" aria-label="grid-fit Documentation" data-md-component="logo">
+    <a href=".." title="grid-fit Documentation" class="md-nav__button md-logo" aria-label="grid-fit Documentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -195,7 +200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/index.md" class="md-nav__link">
+      <a href="../docs/index.md" class="md-nav__link">
         
   
   
@@ -222,7 +227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/docs/bindings.md" class="md-nav__link">
+      <a href="../docs/bindings.md" class="md-nav__link">
         
   
   
@@ -259,6 +264,82 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview Diagram
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c-core-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C++ Core Development
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compiling-for-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compiling for Bindings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python Package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        R Package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -271,8 +352,58 @@
               
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+
+<h1 id="bindings-how-c-compiling-works-for-python-and-r">Bindings: How C++ Compiling Works for Python and R</h1>
+<h2 id="overview-diagram">Overview Diagram</h2>
+<pre><code class="language-mermaid">flowchart TD
+    A[C++ Source Code] --&gt;|Compile with CMake/pybind11| B(Python Shared Library .so)
+    A --&gt;|Compile with CMake/Rcpp| C(R Shared Library .so)
+    B --&gt;|Install with pip| D[Python Package]
+    C --&gt;|Install with devtools| E[R Package]
+    D --&gt;|import gridfit| F[Python User]
+    E --&gt;|library(gridfit)| G[R User]
+</code></pre>
+<h2 id="c-core-development">C++ Core Development</h2>
+<p>You write and edit your C++ code (e.g., in <code>src/</code>).</p>
+<h2 id="compiling-for-bindings">Compiling for Bindings</h2>
+<ul>
+<li>To use your C++ code in Python or R, you must compile it into a shared library (e.g., <code>.so</code> on Linux, <code>.dll</code> on Windows, <code>.dylib</code> on macOS).</li>
+<li>This is usually done with CMake or a similar build system, which creates the shared library and the necessary binding code (using pybind11 for Python, Rcpp for R).</li>
+</ul>
+<h2 id="python-package">Python Package</h2>
+<ul>
+<li>The Python package (created with pybind11) includes the compiled shared library (e.g., <code>gridfit.cpython-310-x86_64-linux-gnu.so</code>).</li>
+<li>When you install the Python package (e.g., with <code>pip install .</code>), the build process compiles the C++ code and places the shared library in the package directory.</li>
+<li>Python imports this shared library as a module.</li>
+</ul>
+<h2 id="r-package">R Package</h2>
+<ul>
+<li>The R package (created with Rcpp) also includes the compiled shared library (e.g., <code>gridfit.so</code>).</li>
+<li>When you build/install the R package (e.g., with <code>devtools::install()</code>), R compiles the C++ code and places the shared library in the package’s <code>libs/</code> directory.</li>
+<li>R loads this shared library when you load the package.</li>
+</ul>
+<h2 id="summary">Summary</h2>
+<ul>
+<li>The C++ code is compiled into a shared library for both Python and R.</li>
+<li>The packages (Python and R) include the compiled version, not the raw C++ source (except for development or source distributions).</li>
+<li>You need to recompile whenever you change the C++ code and want those changes available in Python or R.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -309,10 +440,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "/", "features": [], "search": "/assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
     
   </body>
