@@ -574,10 +574,22 @@
 <h1 id="development-guide">Development Guide</h1>
 <p>This page provides instructions for developers working on the grid-fit library.</p>
 <h2 id="getting-started-recommended">Getting Started (Recommended)</h2>
-<p>The fastest way to build, install, and test all language bindings (C++, Python, R) is to simply run:</p>
-<div class="highlight"><pre><span></span><code>./install.sh
-</code></pre></div>
-<p>This script will:
+<ol>
+<li><strong>Clone the repository:</strong>
+   <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/rae-gh/grid-fit.git
+<span class="nb">cd</span><span class="w"> </span>grid-fit
+</code></pre></div></li>
+<li><strong>(Recommended) Create and activate a conda environment:</strong>
+   <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>gridfit-dev<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gxx_linux-64<span class="w"> </span>-y
+conda<span class="w"> </span>activate<span class="w"> </span>gridfit-dev
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>pybind11<span class="w"> </span>pytest<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>-y
+Rscript<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;install.packages(&quot;devtools&quot;)&#39;</span>
+</code></pre></div></li>
+<li><strong>Run the install script:</strong>
+   <div class="highlight"><pre><span></span><code>./install.sh
+</code></pre></div></li>
+</ol>
+<p>The <code>install.sh</code> script will:
 - Clean previous builds
 - Build the C++ core
 - Build and install the Python and R bindings
