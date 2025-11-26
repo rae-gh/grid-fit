@@ -1,0 +1,5 @@
+[flake8]
+# Set to a value you prefer, or ignore E501 to disable line length check
+ignore = E501
+# Or, to just increase the limit, use:
+# max-line-length = 120
