@@ -1,4 +1,7 @@
+
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <Python.h>
+#include <numpy/arrayobject.h>
 #include "../include/interp.h"
 #include <vector>
 
@@ -8,11 +11,12 @@ static PyObject* py_interp(PyObject* self, PyObject* args) {
     if (!PyArg_ParseTuple(args, "ffi", &a, &b, &n))
         return NULL;
     std::vector<float> result = interp(a, b, n);
-    PyObject* pylist = PyList_New(result.size());
-    for (size_t i = 0; i < result.size(); ++i) {
-        PyList_SetItem(pylist, i, PyFloat_FromDouble(result[i]));
-    }
-    return pylist;
+    npy_intp dims[1] = { static_cast<npy_intp>(result.size()) };
+    PyObject* array = PyArray_SimpleNew(1, dims, NPY_FLOAT);
+    if (!array) return NULL;
+    float* array_data = static_cast<float*>(PyArray_DATA((PyArrayObject*)array));
+    std::copy(result.begin(), result.end(), array_data);
+    return array;
 }
 
 static PyMethodDef Methods[] = {
@@ -29,5 +33,6 @@ static struct PyModuleDef moduledef = {
 };
 
 PyMODINIT_FUNC PyInit_gridfit_interp(void) {
+    import_array(); // Initialize numpy C API
     return PyModule_Create(&moduledef);
 }

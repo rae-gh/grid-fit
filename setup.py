@@ -1,10 +1,11 @@
+import numpy
 from setuptools import setup, Extension, find_packages
 
 ext_modules = [
     Extension(
         "gridfit.gridfit_interp",  # This is the important part!
         sources=["python/gridfit/interp_py.cpp", "src/interp.cpp"],
-        include_dirs=["include"],
+        include_dirs=[numpy.get_include(), "include"],
         language="c++",
     ),
 ]
