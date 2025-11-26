@@ -645,8 +645,11 @@
 </code></pre></div>
 <h2 id="2-set-up-conda-environment">2. Set Up Conda Environment</h2>
 <p>Create and activate a conda environment for development:</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>gridfit-dev<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gxx_linux-64<span class="w"> </span>-y
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>gridfit-dev<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gxx_linux-64<span class="w"> </span>-y
 conda<span class="w"> </span>activate<span class="w"> </span>gridfit-dev
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>pybind11<span class="w"> </span>pytest<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>-y
+Rscript<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;install.packages(&quot;devtools&quot;)&#39;</span>
+Rscript<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;devtools::install(&quot;R&quot;)&#39;</span>
 </code></pre></div>
 <p>You can add more dependencies to this environment as needed (e.g., pybind11, pytest, etc.).</p>
 <h2 id="3-install-python-library-in-editable-mode">3. Install Python Library in Editable Mode</h2>
