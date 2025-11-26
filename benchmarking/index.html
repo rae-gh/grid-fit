@@ -9,10 +9,8 @@
       
       
       
-        <link rel="prev" href="../bindings/">
+        <link rel="prev" href="../development/">
       
-      
-        <link rel="next" href="../benchmarking/">
       
       
         
@@ -23,7 +21,7 @@
     
     
       
-        <title>Development - grid-fit Documentation</title>
+        <title>Benchmarking - grid-fit Documentation</title>
       
     
     
@@ -72,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#development-guide" class="md-skip">
+        <a href="#benchmarking" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Development
+              Benchmarking
             
           </span>
         </div>
@@ -253,6 +251,33 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
     
   
   
@@ -272,7 +297,7 @@
   <span class="md-ellipsis">
     
   
-    Development
+    Benchmarking
   
 
     
@@ -290,7 +315,7 @@
   <span class="md-ellipsis">
     
   
-    Development
+    Benchmarking
   
 
     
@@ -316,10 +341,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-clone-the-repository" class="md-nav__link">
+  <a href="#how-to-run-the-benchmark" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Clone the Repository
+        How to Run the Benchmark
       
     </span>
   </a>
@@ -327,113 +352,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-set-up-conda-environment" class="md-nav__link">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Set Up Conda Environment
+        Results
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-install-python-library-in-editable-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Install Python Library in Editable Mode
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-build-c-core-and-bindings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Build C++ Core and Bindings
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-keep-r-library-consistent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Keep R Library Consistent
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-manual-testing-before-push" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. Manual Testing Before Push
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Manual Testing Before Push">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#r" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        R
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pre-commit-hooks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-commit Hooks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Pre-commit Hooks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -441,33 +366,6 @@
   
 </nav>
       
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../benchmarking/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Benchmarking
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -499,10 +397,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-clone-the-repository" class="md-nav__link">
+  <a href="#how-to-run-the-benchmark" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Clone the Repository
+        How to Run the Benchmark
       
     </span>
   </a>
@@ -510,113 +408,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2-set-up-conda-environment" class="md-nav__link">
+  <a href="#results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. Set Up Conda Environment
+        Results
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-install-python-library-in-editable-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Install Python Library in Editable Mode
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#4-build-c-core-and-bindings" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Build C++ Core and Bindings
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#5-keep-r-library-consistent" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Keep R Library Consistent
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#6-manual-testing-before-push" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. Manual Testing Before Push
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. Manual Testing Before Push">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#python" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#r" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        R
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pre-commit-hooks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre-commit Hooks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Pre-commit Hooks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setup
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -637,48 +435,30 @@
 
 
 
-<h1 id="development-guide">Development Guide</h1>
-<p>This page provides instructions for developers working on the grid-fit library.</p>
-<h2 id="1-clone-the-repository">1. Clone the Repository</h2>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/rae-gh/grid-fit.git
-<span class="nb">cd</span><span class="w"> </span>grid-fit
-</code></pre></div>
-<h2 id="2-set-up-conda-environment">2. Set Up Conda Environment</h2>
-<p>Create and activate a conda environment for development:</p>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>gridfit-dev<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.10<span class="w"> </span>cmake<span class="w"> </span>make<span class="w"> </span>gxx_linux-64<span class="w"> </span>-y
-conda<span class="w"> </span>activate<span class="w"> </span>gridfit-dev
-</code></pre></div>
-<p>You can add more dependencies to this environment as needed (e.g., pybind11, pytest, etc.).</p>
-<h2 id="3-install-python-library-in-editable-mode">3. Install Python Library in Editable Mode</h2>
-<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-</code></pre></div>
-<p>This allows you to edit the Python code and have changes reflected immediately.</p>
-<h2 id="4-build-c-core-and-bindings">4. Build C++ Core and Bindings</h2>
-<p>Follow the instructions in the README or CMakeLists.txt to build the C++ core and bindings for Python and R.</p>
-<h2 id="5-keep-r-library-consistent">5. Keep R Library Consistent</h2>
-<p>When updating the C++ core, ensure the R bindings are updated as well. Use the examples in <code>examples/R/</code> to test.</p>
-<h2 id="6-manual-testing-before-push">6. Manual Testing Before Push</h2>
-<h3 id="python">Python</h3>
-<p>Run the integration tests with pytest:</p>
-<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/python
-</code></pre></div>
-<h3 id="r">R</h3>
-<p>Run the R integration test script:</p>
-<div class="highlight"><pre><span></span><code>Rscript<span class="w"> </span>tests/R/test_interp.R
-</code></pre></div>
-<p>Make sure both tests pass before pushing changes.</p>
-<h2 id="pre-commit-hooks">Pre-commit Hooks</h2>
-<p>This project uses pre-commit hooks to help maintain code quality for Python and C++ files. Hooks will automatically check formatting and linting before each commit.</p>
-<h3 id="setup">Setup</h3>
+<h1 id="benchmarking">Benchmarking</h1>
+<p>This page describes how to benchmark the performance of the grid-fit library against standard Python methods.</p>
+<h2 id="how-to-run-the-benchmark">How to Run the Benchmark</h2>
 <ol>
-<li>Install pre-commit (if not already):
-   <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pre-commit
-</code></pre></div></li>
-<li>Install the hooks:
-   <div class="highlight"><pre><span></span><code>pre-commit<span class="w"> </span>install
-</code></pre></div></li>
+<li>Make sure you have the required dependencies:</li>
+<li>numpy</li>
+<li>scipy</li>
 </ol>
-<p>Now, every time you commit, black and flake8 will check Python files, and clang-format will check C++ files. You can add more hooks or languages as needed.</p>
+<p>You can install them with:
+   <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>numpy<span class="w"> </span>scipy
+</code></pre></div></p>
+<ol>
+<li>
+<p>Navigate to the <code>examples/benchmarking/</code> directory.</p>
+</li>
+<li>
+<p>Run the benchmark script:
+   <div class="highlight"><pre><span></span><code>python<span class="w"> </span>benchmark_trilinear.py
+</code></pre></div></p>
+</li>
+</ol>
+<p>This script compares the performance of the standard Python method (<code>scipy.interpolate.RegularGridInterpolator</code>) with the grid-fit trilinear interpolation (to be implemented). The script will print timing results for each method.</p>
+<h2 id="results">Results</h2>
+<p>Results pending implementation of the grid-fit trilinear function. Once available, this page will be updated with performance comparisons and analysis.</p>
 
 
 
