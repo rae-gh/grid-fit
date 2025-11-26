@@ -499,27 +499,27 @@
 <h2 id="installation">Installation</h2>
 <h3 id="python">Python</h3>
 <p>You can install the Python bindings using pip (after building):</p>
-<pre><code class="language-bash">pip install .
-</code></pre>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
+</code></pre></div>
 <h3 id="r">R</h3>
 <p>You can install the R package using devtools (after building):</p>
-<pre><code class="language-R"># In R
-install.packages(&quot;devtools&quot;)
-devtools::install(&quot;path/to/grid-fit&quot;)
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="c1"># In R</span>
+<span class="nf">install.packages</span><span class="p">(</span><span class="s">&quot;devtools&quot;</span><span class="p">)</span>
+<span class="n">devtools</span><span class="o">::</span><span class="nf">install</span><span class="p">(</span><span class="s">&quot;path/to/grid-fit&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="usage-example">Usage Example</h2>
 <h3 id="python_1">Python</h3>
-<pre><code class="language-python">import gridfit
-# Interpolate between 0 and 1 with 1 interval
-result = gridfit.interp(0, 1, 1)
-print(result)  # [0.5]
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">gridfit</span>
+<span class="c1"># Interpolate between 0 and 1 with 1 interval</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">gridfit</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>  <span class="c1"># [0.5]</span>
+</code></pre></div>
 <h3 id="r_1">R</h3>
-<pre><code class="language-R">library(gridfit)
-# Interpolate between 0 and 1 with 1 interval
-result &lt;- interp(0, 1, 1)
-print(result)  # [0.5]
-</code></pre>
+<div class="highlight"><pre><span></span><code><span class="nf">library</span><span class="p">(</span><span class="n">gridfit</span><span class="p">)</span>
+<span class="c1"># Interpolate between 0 and 1 with 1 interval</span>
+<span class="n">result</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">interp</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span><span class="w">  </span><span class="c1"># [0.5]</span>
+</code></pre></div>
 <hr />
 <p>For more details, see the README or source code.</p>
 

@@ -473,14 +473,14 @@
 
 <h1 id="bindings-how-c-compiling-works-for-python-and-r">Bindings: How C++ Compiling Works for Python and R</h1>
 <h2 id="overview-diagram">Overview Diagram</h2>
-<pre><code class="language-mermaid">flowchart TD
+<div class="highlight"><pre><span></span><code>flowchart TD
     A[C++ Source Code] --&gt;|Compile with CMake/pybind11| B(Python Shared Library .so)
     A --&gt;|Compile with CMake/Rcpp| C(R Shared Library .so)
     B --&gt;|Install with pip| D[Python Package]
     C --&gt;|Install with devtools| E[R Package]
     D --&gt;|import gridfit| F[Python User]
     E --&gt;|library(gridfit)| G[R User]
-</code></pre>
+</code></pre></div>
 <h2 id="c-core-development">C++ Core Development</h2>
 <p>You write and edit your C++ code (e.g., in <code>src/</code>).</p>
 <h2 id="compiling-for-bindings">Compiling for Bindings</h2>
