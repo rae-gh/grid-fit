@@ -4,6 +4,7 @@ nav:
   - Bindings: bindings.md
   - Development: development.md
   - Benchmarking: benchmarking.md
+  - Multivariate Interpolation PDF: MultivariateInterpolation.pdf
 
 theme:
   name: material

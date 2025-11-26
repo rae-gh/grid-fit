@@ -12,14 +12,14 @@ def benchmark_trilinear(n=200, n_points=100000):
     n: grid size in each dimension (int)
     n_points: number of random query points (int)
     """
-    # Create a regular 3D grid
-    x = np.linspace(0, 1, n)
-    y = np.linspace(0, 1, n)
-    z = np.linspace(0, 1, n)
+    # Create a regular 3D grid (0 to n)
+    x = np.linspace(0, n, n)
+    y = np.linspace(0, n, n)
+    z = np.linspace(0, n, n)
     values = np.random.rand(n, n, n)
 
-    # Generate random query points (shared for both)
-    points = np.random.rand(n_points, 3)
+    # Generate random query points (shared for both), scaled to [0, n]
+    points = np.random.rand(n_points, 3) * n
 
     print(
         f"Benchmarking trilinear interpolation with grid size {n}^3 and {n_points} points."
@@ -51,14 +51,9 @@ def benchmark_trilinear(n=200, n_points=100000):
     print("Max abs diff:", max_diff)
     if max_diff > 1e-5:
         print("[WARNING] gridfit values do no NOT match scipy..\n")
-        if scipy_result.mean() > gridfit_result.mean():
-            print("Scipy result is greater than Gridfit result on average.")
-        else:
-            print("Gridfit result is greater than Scipy result on average.")
     else:
         print("Gridfit result is similar to scipy result.")
-
-        # Print which is faster and by how much
+    # Print which is faster and by how much
     if t_gridfit < t_scipy:
         print(f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x")
     else:
