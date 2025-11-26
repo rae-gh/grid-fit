@@ -7,7 +7,7 @@ LIBNAME = libgridfit.a
 
 $(LIBDIR)/$(LIBNAME): $(SRCDIR)/interp.cpp $(INCLUDEDIR)/interp.h
 	@mkdir -p $(LIBDIR)
-	g++ -c $(SRCDIR)/interp.cpp -I$(INCLUDEDIR) -o $(LIBDIR)/interp.o
+	g++ -O3 -march=native -c $(SRCDIR)/interp.cpp -I$(INCLUDEDIR) -o $(LIBDIR)/interp.o
 	ar rcs $(LIBDIR)/$(LIBNAME) $(LIBDIR)/interp.o
 
 .PHONY: clean
