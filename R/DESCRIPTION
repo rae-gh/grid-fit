@@ -1,0 +1,10 @@
+Package: gridfitInterp
+Type: Package
+Title: Linear Interpolation Wrapper
+Version: 0.1.0
+Author: Your Name
+Maintainer: Your Name <your@email.com>
+Description: R wrapper for C++ interp function.
+License: MIT
+LinkingTo: Rcpp
+Imports: Rcpp

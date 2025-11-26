@@ -1,0 +1,3 @@
+useDynLib(gridfitInterp)
+importFrom(Rcpp, evalCpp)
+export(interp)
