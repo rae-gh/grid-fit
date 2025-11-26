@@ -8,11 +8,13 @@ theme:
   palette:
     primary: blue
 
+plugins:
+  - search
+  - mermaid2
+
 markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed
   - pymdownx.details
 
-plugins:
-  - search
-  - mermaid2
+
