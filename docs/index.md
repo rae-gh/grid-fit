@@ -1,21 +1,22 @@
 # grid-fit Documentation
 
+
 ## Installation
 
 ### Python
-You can install the Python bindings using pip (after building):
+Install directly from GitHub:
 
 ```bash
-pip install .
+python -m pip install git+https://github.com/rae-gh/grid-fit.git
 ```
 
 ### R
-You can install the R package using devtools (after building):
+Install directly from GitHub using devtools:
 
 ```R
-# In R
 install.packages("devtools")
-devtools::install("path/to/grid-fit")
+library(devtools)
+install_url("https://github.com/rae-gh/grid-fit/archive/refs/heads/main.zip")
 ```
 
 ## Usage Example
