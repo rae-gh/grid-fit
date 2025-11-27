@@ -13,22 +13,44 @@ def benchmark_trilinear(n=20, n_points=100):
     n_points: number of random query points (int)
     """
     # Create a regular 3D grid (0 to n)
-    n = 2
+    n = 3
     n_points = 2
     x = np.arange(n)
     y = np.arange(n)
     z = np.arange(n)
-    # values = np.random.rand(n, n, n)
-    values = np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
-
-    # Specify fixed query points for controlled testing
-    points = np.array(
+    values = np.random.rand(n, n, n)
+    values = np.array(
         [
-            [0.0, 0.0, 0.0],  # Should return 1
-            [1.0, 1.0, 1.0],  # Should return 8
-            [0.5, 0.5, 0.5],  # Should interpolate to the center
-        ]
+            [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
+            [[10, 11, 12], [13, 14, 15], [16, 17, 18]],
+            [[19, 20, 21], [22, 23, 24], [25, 26, 27]],
+        ],
+        dtype=np.float32,
     )
+    # values[0, 0, 0] → 1
+    # values[0, 0, 1] → 2
+    # values[0, 1, 0] → 3
+    # values[0, 1, 1] → 4
+    # values[1, 0, 0] → 5
+    # values[1, 0, 1] → 6
+    # values[1, 1, 0] → 7
+    # values[1, 1, 1] → 8
+
+    if False:
+        # Generate random query points (shared for both), scaled to [0, n-1]
+        points = np.random.rand(n_points, 3) * (n - 1)
+    else:
+        # Specify fixed query points for controlled testing
+        points = np.array(
+            [
+                [0.0, 0.0, 0.0],  # Should return 1
+                [1.0, 1.0, 1.0],  # Should return 8
+                [0.5, 0.0, 0.0],  # edge half
+                [0.0, 0.5, 0.0],  # edge half
+                [0.0, 0.0, 0.5],  # edge half
+                [0.5, 0.5, 0.5],  # Should interpolate to the center
+            ]
+        )
     n_points = len(points)
 
     print(x)

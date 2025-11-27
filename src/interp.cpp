@@ -1,4 +1,5 @@
 #include "interp.h"
+#include <cmath>
 #include <cstdio>
 #include <vector>
 
@@ -29,7 +30,6 @@ std::vector<float> interp(double a, double b, int n) {
   return result;
 }
 
-// Dummy trilinear interpolation: returns a vector of 42.0f for each point
 std::vector<float>
 trilinear(const std::vector<float> &x, const std::vector<float> &y,
           const std::vector<float> &z, const std::vector<float> &values,
@@ -43,7 +43,6 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     float px = points[i * ndim + 0];
     float py = points[i * ndim + 1];
     float pz = points[i * ndim + 2];
-    // printf("Point %d: (%.4f, %.4f, %.4f)\n", i, px, py, pz);
 
     // Find lower and upper indices for each axis
     int ix = 0, iy = 0, iz = 0;
@@ -58,7 +57,6 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     int izu = (iz + 1 < nz) ? iz + 1 : iz;
 
     // Fetch the 8 corner values from the 3D grid (values is flat, C-order)
-    // Index: v = values[ix * ny * nz + iy * nz + iz]
     float v000 = values[ix * ny * nz + iy * nz + iz];
     float v100 = values[ixu * ny * nz + iy * nz + iz];
     float v010 = values[ix * ny * nz + iyu * nz + iz];
@@ -70,35 +68,43 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     // declare corner values array
     float corner_values[8];
     corner_values[0] = v000;
-    corner_values[1] = v100;
+    corner_values[1] = v001;
     corner_values[2] = v010;
-    corner_values[3] = v001;
-    corner_values[4] = v110;
+    corner_values[3] = v011;
+    corner_values[4] = v100;
     corner_values[5] = v101;
-    corner_values[6] = v011;
+    corner_values[6] = v110;
     corner_values[7] = v111;
 
-    // printf("  8 corners: %g %g %g %g %g %g %g %g\n",
-    //  v000, v100, v010, v001, v110, v101, v011, v111);
-
-    // mat * corner_values (matrix-vector multiplication)
+    // Matrix Mult between corners and the const matrix
     float out[8] = {0};
     for (int row = 0; row < 8; ++row) {
       for (int col = 0; col < 8; ++col) {
         out[row] += mat[row * 8 + col] * corner_values[col];
       }
     }
-    // Having got the output vector, we apply it to the x,y,z values
-    // we use only the fractional parts of the values
+
+    float mout[2][2][2];
+    mout[0][0][0] = out[0];
+    mout[0][0][1] = out[1];
+    mout[0][1][0] = out[2];
+    mout[0][1][1] = out[3];
+    mout[1][0][0] = out[4];
+    mout[1][0][1] = out[5];
+    mout[1][1][0] = out[6];
+    mout[1][1][1] = out[7];
+
     float dpx = px - x[ix];
     float dpy = py - y[iy];
     float dpz = pz - z[iz];
-    float px_interp = out[0] + out[1] * dpx + out[2] * dpy + out[3] * dpz +
-                      out[4] * dpx * dpy + out[5] * dpx * dpz +
-                      out[6] * dpy * dpz + out[7] * dpx * dpy * dpz;
 
-    // printf("mat * corner_values = [%g %g %g %g %g %g %g %g]\n", out[0],
-    // out[1], out[2], out[3], out[4], out[5], out[6], out[7]);
+    float px_interp = 0.0f;
+    for (int i1 = 0; i1 <= 1; ++i1)
+      for (int j1 = 0; j1 <= 1; ++j1)
+        for (int k1 = 0; k1 <= 1; ++k1) {
+          float coeff = mout[i1][j1][k1];
+          px_interp += coeff * pow(px, i1) * pow(py, j1) * pow(pz, k1);
+        }
     result[i] = px_interp;
   }
   return result;
