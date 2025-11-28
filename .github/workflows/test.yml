@@ -33,6 +33,6 @@ jobs:
         with:
           extra-packages: devtools
       - name: Install your package
-        run: Rscript -e "devtools::install('.')"
+        run: Rscript -e "devtools::install('R')"
       - name: Run R tests
         run: Rscript tests/R/test_interp.R
