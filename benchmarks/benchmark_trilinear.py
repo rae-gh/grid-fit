@@ -8,8 +8,8 @@ import timeit
 
 
 def benchmark_trilinear():
-    runs = "2,3,2*,3*,n*"  # all possible "2,2*,3,3*"
-    n = 50
+    runs = "2,3,2*,3*"  # all possible "2,2*,3,3*"
+    n = 100
     random_points_num = 1000
     runs = f",{runs},"
     runs_data = []
