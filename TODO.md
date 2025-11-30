@@ -1,3 +1,11 @@
+
+30/11/25
+- [ ] Add slices
+- [ ] Visualise data
+- [ ] Add tricubic
+- [ ] GPU implementation
+
+
 # Target interface - PYTHON
 ## Simple drop-in for scipy users:
 from gridfit import RegularGrid3D

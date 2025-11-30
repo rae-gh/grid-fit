@@ -69,7 +69,7 @@ pytest tests/python
 ### R
 Run the R integration test script:
 ```bash
-Rscript tests/R/test_interp.R
+Rscript tests/R/test_trilinear.R
 ```
 
 Make sure both tests pass before pushing changes.

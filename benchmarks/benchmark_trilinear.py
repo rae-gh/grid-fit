@@ -7,7 +7,7 @@ import timeit
 # from gridfit import trilinear
 
 
-def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*"):
+def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=False):
     num_benches = 10
     runs = f",{runs},"  # all possible "2,2*,3,3*"
     runs_data = []
@@ -162,38 +162,43 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*"):
                 )
         else:
             print("== results are equivalent ==")
+            if print_res:
+                print(scipy_result)
+                print(gridfit_result)
         # Print which is faster and by how much
         cons, inter = "", ""
         if t_gridfitconstruct < t_scipyconstruct:
-            print(
-                f"gridfit is faster than scipy by {t_scipyconstruct / t_gridfitconstruct:.2f}x"
-            )
-            cons = f"gridfit is faster than scipy by {t_scipyconstruct / t_gridfitconstruct:.2f}x"
+            print(f"gridfit is faster by {t_scipyconstruct / t_gridfitconstruct:.2f}x")
+            cons = f"gridfit is faster by {t_scipyconstruct / t_gridfitconstruct:.2f}x"
         else:
-            print(
-                f"scipy is faster than gridfit by {t_gridfitconstruct / t_scipyconstruct:.2f}x"
-            )
-            cons = f"scipy is faster than gridfit by {t_gridfitconstruct / t_scipyconstruct:.2f}x"
+            print(f"scipy is faster by {t_gridfitconstruct / t_scipyconstruct:.2f}x")
+            cons = f"scipy is faster by {t_gridfitconstruct / t_scipyconstruct:.2f}x"
 
         if t_gridfit < t_scipy:
-            print(f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x")
-            inter = f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x"
+            print(f"gridfit is faster by {t_scipy / t_gridfit:.2f}x")
+            inter = f"gridfit is faster by {t_scipy / t_gridfit:.2f}x"
         else:
-            print(f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x")
-            inter = f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x"
-        return cons, inter
+            print(f"scipy is faster by {t_gridfit / t_scipy:.2f}x")
+            inter = f"scipy is faster by {t_gridfit / t_scipy:.2f}x"
+        return inter, cons
 
 
 if __name__ == "__main__":
-    # Primary benchmark - most realistic
-    n_samples = [500, 1000, 10000, 100000]
-    grid_sizes = [50, 100, 200, 256, 384]
-    results = []
-    for ns in n_samples:
-        for gs in grid_sizes:
-            ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
-            results.append(
-                f"Grid size: {gs}, Sampled points: {ns}\tConstruction:{ans[0]}\tInterpolation:{ans[1]}"
-            )
+    if False:
+        # Primary benchmark - most realistic
+        n_samples = [500, 1000, 10000, 100000]
+        grid_sizes = [50, 100, 200, 256, 384, 512, 1024]
+        results = []
+        for ns in n_samples:
+            for gs in grid_sizes:
+                ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
+                results.append(
+                    f"Grid size:{gs},\tSamples:{ns}\tInterp:{ans[0]}\tConstruct:{ans[1]}"
+                )
 
-    print("\n".join(results))
+        print("\n".join(results))
+    else:
+        ans = benchmark_trilinear(
+            cube_size=2, sampled_points=1, runs="2", print_res=True
+        )
+        print(ans)

@@ -51,42 +51,35 @@ PYBIND11_MODULE(gridfit_interp, m) {
   m.def("trilinear", &py_trilinear, "Trilinear interpolation", py::arg("x"),
         py::arg("y"), py::arg("z"), py::arg("values"), py::arg("points"));
 
-  // GridFit class with lambda constructor for efficient numpy handling
+  // GridFit class - stores pointers to numpy data (zero-copy!)
   py::class_<GridFit>(m, "GridFit")
       .def(py::init([](py::array_t<float> x, py::array_t<float> y,
                        py::array_t<float> z, py::array_t<float> values,
                        int order) {
-             // Get buffer info
+             // Get raw pointers (no copying!)
              auto x_buf = x.request();
              auto y_buf = y.request();
              auto z_buf = z.request();
              auto values_buf = values.request();
 
-             // Convert directly from numpy buffers to vectors (1 copy each)
-             std::vector<float> x_vec(static_cast<float *>(x_buf.ptr),
-                                      static_cast<float *>(x_buf.ptr) +
-                                          x_buf.size);
-             std::vector<float> y_vec(static_cast<float *>(y_buf.ptr),
-                                      static_cast<float *>(y_buf.ptr) +
-                                          y_buf.size);
-             std::vector<float> z_vec(static_cast<float *>(z_buf.ptr),
-                                      static_cast<float *>(z_buf.ptr) +
-                                          z_buf.size);
-             std::vector<float> values_vec(
-                 static_cast<float *>(values_buf.ptr),
-                 static_cast<float *>(values_buf.ptr) + values_buf.size);
-
-             return new GridFit(x_vec, y_vec, z_vec, values_vec, order);
+             return new GridFit(
+                 static_cast<const float *>(x_buf.ptr), x_buf.size,
+                 static_cast<const float *>(y_buf.ptr), y_buf.size,
+                 static_cast<const float *>(z_buf.ptr), z_buf.size,
+                 static_cast<const float *>(values_buf.ptr), order);
            }),
            py::arg("x"), py::arg("y"), py::arg("z"), py::arg("values"),
            py::arg("order") = 2,
-           "Create GridFit interpolator\n\n"
+           py::keep_alive<1, 2>(), // Keep x alive as long as GridFit exists
+           py::keep_alive<1, 3>(), // Keep y alive
+           py::keep_alive<1, 4>(), // Keep z alive
+           py::keep_alive<1, 5>(), // Keep values alive
+           "Create GridFit interpolator (zero-copy)\n\n"
            "Args:\n"
            "    x: X-axis grid coordinates (1D array)\n"
            "    y: Y-axis grid coordinates (1D array)\n"
            "    z: Z-axis grid coordinates (1D array)\n"
-           "    values: Grid values (can be 3D array - will be flattened "
-           "automatically)\n"
+           "    values: Grid values (can be 3D - flattened automatically)\n"
            "    order: 2 for trilinear (default), 3 for tricubic")
       .def(
           "interpolate",

@@ -35,4 +35,4 @@ jobs:
       - name: Install your package
         run: Rscript -e "devtools::install('R')"
       - name: Run R tests
-        run: Rscript tests/R/test_interp.R
+        run: Rscript tests/R/test_trilinear.R

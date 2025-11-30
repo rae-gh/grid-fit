@@ -4,11 +4,14 @@
 
 class GridFit {
 private:
-  // Grid definition
-  std::vector<float> x_;
-  std::vector<float> y_;
-  std::vector<float> z_;
-  std::vector<float> values_;
+  // Store pointers to data instead of copies
+  const float *x_data_;
+  const float *y_data_;
+  const float *z_data_;
+  const float *values_data_;
+
+  // Store sizes
+  size_t nx_, ny_, nz_;
 
   // Interpolation settings
   int order_;
@@ -16,10 +19,9 @@ private:
   int matrix_size_;
 
 public:
-  // Constructor takes grid data and order
-  GridFit(const std::vector<float> &x, const std::vector<float> &y,
-          const std::vector<float> &z, const std::vector<float> &values,
-          int order = 3);
+  // Constructor takes pointers and sizes
+  GridFit(const float *x, size_t nx, const float *y, size_t ny, const float *z,
+          size_t nz, const float *values, int order = 2);
 
   // Interpolate at given points
   std::vector<float> interpolate(const std::vector<float> &points, int n_points,

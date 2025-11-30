@@ -5,7 +5,7 @@ set -e
 
 # Find and run all Python benchmark scripts in this directory
 shopt -s nullglob
-for f in "$(dirname "$0")"/*.py; do
+for f in "$(dirname "$0")"/bench*.py; do
     fname=$(basename "$f")
     echo "--- Running $fname ---"
     python "$f" "$@"
