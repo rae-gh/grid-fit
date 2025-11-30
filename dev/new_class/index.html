@@ -1,0 +1,740 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../gridfit_icon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Adding a New C++ Class to gridfit with pybind11 - grid-fit Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adding-a-new-c-class-to-gridfit-with-pybind11" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="grid-fit Documentation" class="md-header__button md-logo" aria-label="grid-fit Documentation" data-md-component="logo">
+      
+  <img src="../../gridfit_icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            grid-fit Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Adding a New C++ Class to gridfit with pybind11
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="grid-fit Documentation" class="md-nav__button md-logo" aria-label="grid-fit Documentation" data-md-component="logo">
+      
+  <img src="../../gridfit_icon.png" alt="logo">
+
+    </a>
+    grid-fit Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bindings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../benchmarking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../MultivariateInterpolation.pdf" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multivariate Interpolation PDF
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-by-step-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-step Guide
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step-by-step Guide">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-header-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create the Header File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-create-the-implementation-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Create the Implementation File
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-update-the-python-bindings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Update the Python Bindings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-update-setuppy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Update setup.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-update-python-package-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Update Python Package Init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-build-and-install" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Build and Install
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-test-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test from Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor-with-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor with Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-returning-numpy-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Returning NumPy Array
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-taking-numpy-array" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Taking NumPy Array
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adding-a-new-c-class-to-gridfit-with-pybind11">Adding a New C++ Class to gridfit with pybind11</h1>
+<h2 id="step-by-step-guide">Step-by-step Guide</h2>
+<h3 id="1-create-the-header-file">1. Create the Header File</h3>
+<p><strong>File:</strong> <code>include/your_class.h</code>
+<div class="highlight"><pre><span></span><code><span class="cp">#pragma once</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">YourClass</span><span class="w"> </span><span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="c1">// Private member variables</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data_</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="c1">// Constructor</span>
+<span class="w">    </span><span class="n">YourClass</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Methods</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">details</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">someMethod</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">param</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div></p>
+<h3 id="2-create-the-implementation-file">2. Create the Implementation File</h3>
+<p><strong>File:</strong> <code>src/your_class.cpp</code>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;your_class.h&quot;</span>
+
+<span class="n">YourClass</span><span class="o">::</span><span class="n">YourClass</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Constructor implementation</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">YourClass</span><span class="o">::</span><span class="n">details</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Implementation here&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">YourClass</span><span class="o">::</span><span class="n">someMethod</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">param</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Method implementation</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="3-update-the-python-bindings">3. Update the Python Bindings</h3>
+<p><strong>File:</strong> <code>python/gridfit/interp_py.cpp</code></p>
+<p><strong>Add include at top:</strong>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;../include/your_class.h&quot;</span>
+</code></pre></div></p>
+<p><strong>Add to <code>PYBIND11_MODULE</code> section:</strong>
+<div class="highlight"><pre><span></span><code><span class="n">PYBIND11_MODULE</span><span class="p">(</span><span class="n">gridfit_interp</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// ... existing bindings ...</span>
+
+<span class="w">    </span><span class="c1">// Bind your new class</span>
+<span class="w">    </span><span class="n">py</span><span class="o">::</span><span class="n">class_</span><span class="o">&lt;</span><span class="n">YourClass</span><span class="o">&gt;</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;YourClass&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;&gt;</span><span class="p">())</span><span class="w">                          </span><span class="c1">// Constructor with no args</span>
+<span class="w">        </span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;details&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">YourClass</span><span class="o">::</span><span class="n">details</span><span class="p">)</span><span class="w">        </span><span class="c1">// Bind method</span>
+<span class="w">        </span><span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;some_method&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">YourClass</span><span class="o">::</span><span class="n">someMethod</span><span class="p">,</span><span class="w"> </span><span class="c1">// Bind method with args</span>
+<span class="w">             </span><span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;param&quot;</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="4-update-setuppy">4. Update setup.py</h3>
+<p><strong>File:</strong> <code>setup.py</code></p>
+<p>Add the new source file to the sources list:
+<div class="highlight"><pre><span></span><code><span class="n">ext_modules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Pybind11Extension</span><span class="p">(</span>
+        <span class="s2">&quot;gridfit.gridfit_interp&quot;</span><span class="p">,</span>
+        <span class="n">sources</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;python/gridfit/interp_py.cpp&quot;</span><span class="p">,</span> 
+            <span class="s2">&quot;src/interp.cpp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;src/your_class.cpp&quot;</span>  <span class="c1"># ADD THIS</span>
+        <span class="p">],</span>
+        <span class="n">include_dirs</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;include&quot;</span><span class="p">],</span>
+        <span class="n">language</span><span class="o">=</span><span class="s2">&quot;c++&quot;</span><span class="p">,</span>
+        <span class="n">cxx_std</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div></p>
+<h3 id="5-update-python-package-init">5. Update Python Package Init</h3>
+<p><strong>File:</strong> <code>python/gridfit/__init__.py</code></p>
+<p>Expose the class to Python users:
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">.gridfit_interp</span><span class="w"> </span><span class="kn">import</span> <span class="n">YourClass</span>
+</code></pre></div></p>
+<h3 id="6-build-and-install">6. Build and Install</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Clean previous build</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>build/
+
+<span class="c1"># Reinstall</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</code></pre></div>
+<h3 id="7-test-from-python">7. Test from Python</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">gridfit</span><span class="w"> </span><span class="kn">import</span> <span class="n">YourClass</span>
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">YourClass</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">details</span><span class="p">())</span>
+</code></pre></div>
+<hr />
+<h2 id="common-patterns">Common Patterns</h2>
+<h3 id="constructor-with-parameters">Constructor with Parameters</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// C++ header</span>
+<span class="n">YourClass</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+
+<span class="c1">// pybind11 binding</span>
+<span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="n">py</span><span class="o">::</span><span class="n">init</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(),</span>
+<span class="w">     </span><span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;size&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">py</span><span class="o">::</span><span class="n">arg</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="method-returning-numpy-array">Method Returning NumPy Array</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// C++ method</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getData</span><span class="p">();</span>
+
+<span class="c1">// pybind11 binding</span>
+<span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;get_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[](</span><span class="n">YourClass</span><span class="o">&amp;</span><span class="w"> </span><span class="n">self</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">getData</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">py</span><span class="o">::</span><span class="n">array_t</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span><span class="n">data</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+<span class="p">})</span>
+</code></pre></div>
+<h3 id="method-taking-numpy-array">Method Taking NumPy Array</h3>
+<div class="highlight"><pre><span></span><code><span class="c1">// C++ wrapper in interp_py.cpp</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">setData_wrapper</span><span class="p">(</span><span class="n">YourClass</span><span class="o">&amp;</span><span class="w"> </span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">py</span><span class="o">::</span><span class="n">array_t</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">arr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">arr</span><span class="p">.</span><span class="n">request</span><span class="p">();</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vec</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">ptr</span><span class="p">),</span>
+<span class="w">                           </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">buf</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+<span class="w">    </span><span class="n">self</span><span class="p">.</span><span class="n">setData</span><span class="p">(</span><span class="n">vec</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// pybind11 binding</span>
+<span class="p">.</span><span class="n">def</span><span class="p">(</span><span class="s">&quot;set_data&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">setData_wrapper</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="checklist">Checklist</h2>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> Created <code>include/your_class.h</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Created <code>src/your_class.cpp</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Added <code>#include</code> to <code>interp_py.cpp</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Added <code>py::class_&lt;&gt;</code> binding to <code>PYBIND11_MODULE</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Added source file to <code>setup.py</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Exposed class in <code>__init__.py</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Rebuilt with <code>pip install -e .</code></li>
+<li class="task-list-item"><input type="checkbox" disabled/> Tested from Python</li>
+</ul>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p><strong>"undefined symbol" error:</strong>
+- Check that <code>.cpp</code> file is in <code>setup.py</code> sources
+- Rebuild with <code>rm -rf build/ &amp;&amp; pip install -e .</code></p>
+<p><strong>"cannot import name" error:</strong>
+- Check class is exposed in <code>__init__.py</code>
+- Check binding name matches: <code>py::class_&lt;YourClass&gt;(m, "YourClass")</code></p>
+<p><strong>Build errors:</strong>
+- Check all includes are correct
+- Check <code>#pragma once</code> in header
+- Check constructor/method signatures match between <code>.h</code> and <code>.cpp</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
