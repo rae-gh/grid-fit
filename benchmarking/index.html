@@ -487,27 +487,38 @@
 </ol>
 <p>This script compares the performance of the standard Python method (<code>scipy.interpolate.RegularGridInterpolator</code>) with the grid-fit trilinear interpolation (to be implemented). The script will print timing results for each method.</p>
 <h2 id="results">Results</h2>
-<p>Results are a work in progress. Currently trilinear interpolation itself is a bit faster than scipy but the cosntruction of the grid object so slower:</p>
-<div class="highlight"><pre><span></span><code>Grid size: 50, Sampled points: 500      Construction:scipy is faster than gridfit by 5.36x      Interpolation:gridfit is faster than scipy by 3.56x
-Grid size: 100, Sampled points: 500     Construction:scipy is faster than gridfit by 141.34x    Interpolation:gridfit is faster than scipy by 6.15x
-Grid size: 200, Sampled points: 500     Construction:scipy is faster than gridfit by 1050.24x   Interpolation:gridfit is faster than scipy by 3.41x
-Grid size: 256, Sampled points: 500     Construction:scipy is faster than gridfit by 3227.74x   Interpolation:gridfit is faster than scipy by 2.19x
-Grid size: 384, Sampled points: 500     Construction:scipy is faster than gridfit by 11688.96x  Interpolation:gridfit is faster than scipy by 3.96x
-Grid size: 50, Sampled points: 1000     Construction:scipy is faster than gridfit by 6.99x      Interpolation:gridfit is faster than scipy by 1.68x
-Grid size: 100, Sampled points: 1000    Construction:scipy is faster than gridfit by 30.23x     Interpolation:gridfit is faster than scipy by 1.49x
-Grid size: 200, Sampled points: 1000    Construction:scipy is faster than gridfit by 685.68x    Interpolation:gridfit is faster than scipy by 1.47x
-Grid size: 256, Sampled points: 1000    Construction:scipy is faster than gridfit by 1646.25x   Interpolation:gridfit is faster than scipy by 1.74x
-Grid size: 384, Sampled points: 1000    Construction:scipy is faster than gridfit by 10000.22x  Interpolation:gridfit is faster than scipy by 3.08x
-Grid size: 50, Sampled points: 10000    Construction:scipy is faster than gridfit by 7.62x      Interpolation:gridfit is faster than scipy by 2.24x
-Grid size: 100, Sampled points: 10000   Construction:scipy is faster than gridfit by 34.32x     Interpolation:gridfit is faster than scipy by 1.54x
-Grid size: 200, Sampled points: 10000   Construction:scipy is faster than gridfit by 546.57x    Interpolation:gridfit is faster than scipy by 1.36x
-Grid size: 256, Sampled points: 10000   Construction:scipy is faster than gridfit by 1315.01x   Interpolation:gridfit is faster than scipy by 2.39x
-Grid size: 384, Sampled points: 10000   Construction:scipy is faster than gridfit by 9893.04x   Interpolation:gridfit is faster than scipy by 1.09x
-Grid size: 50, Sampled points: 100000   Construction:scipy is faster than gridfit by 4.12x      Interpolation:gridfit is faster than scipy by 1.98x
-Grid size: 100, Sampled points: 100000  Construction:scipy is faster than gridfit by 47.77x     Interpolation:gridfit is faster than scipy by 1.57x
-Grid size: 200, Sampled points: 100000  Construction:scipy is faster than gridfit by 274.12x    Interpolation:gridfit is faster than scipy by 1.17x
-Grid size: 256, Sampled points: 100000  Construction:scipy is faster than gridfit by 953.98x    Interpolation:gridfit is faster than scipy by 1.10x
-Grid size: 384, Sampled points: 100000  Construction:scipy is faster than gridfit by 10873.93x  Interpolation:gridfit is faster than scipy by 1.20x
+<p>Results are a work in progress. Currently trilinear interpolation itself is a bit faster than scipy but the construction of the grid object is slower:</p>
+<div class="highlight"><pre><span></span><code>Grid size:50,   Samples:500     Interp:gridfit is faster by 6.45x       Construct:scipy is faster by 6.28x
+Grid size:100,  Samples:500     Interp:gridfit is faster by 5.37x       Construct:scipy is faster by 42.60x
+Grid size:200,  Samples:500     Interp:gridfit is faster by 2.61x       Construct:scipy is faster by 301.96x
+Grid size:256,  Samples:500     Interp:gridfit is faster by 3.71x       Construct:scipy is faster by 278.20x
+Grid size:384,  Samples:500     Interp:gridfit is faster by 2.45x       Construct:scipy is faster by 2100.23x
+Grid size:512,  Samples:500     Interp:gridfit is faster by 2.18x       Construct:scipy is faster by 6136.64x
+Grid size:1024, Samples:500     Interp:gridfit is faster by 2.12x       Construct:scipy is faster by 57075.40x
+
+Grid size:50,   Samples:1000    Interp:gridfit is faster by 3.97x       Construct:scipy is faster by 3.08x
+Grid size:100,  Samples:1000    Interp:gridfit is faster by 2.41x       Construct:scipy is faster by 30.54x
+Grid size:200,  Samples:1000    Interp:gridfit is faster by 2.14x       Construct:scipy is faster by 226.45x
+Grid size:256,  Samples:1000    Interp:gridfit is faster by 1.81x       Construct:scipy is faster by 692.20x
+Grid size:384,  Samples:1000    Interp:gridfit is faster by 2.68x       Construct:scipy is faster by 2014.38x
+Grid size:512,  Samples:1000    Interp:gridfit is faster by 1.66x       Construct:scipy is faster by 4721.84x
+Grid size:1024, Samples:1000    Interp:gridfit is faster by 2.49x       Construct:scipy is faster by 36303.35x
+
+Grid size:50,   Samples:10000   Interp:gridfit is faster by 1.97x       Construct:scipy is faster by 1.90x
+Grid size:100,  Samples:10000   Interp:gridfit is faster by 1.42x       Construct:scipy is faster by 31.64x
+Grid size:200,  Samples:10000   Interp:gridfit is faster by 1.35x       Construct:scipy is faster by 126.81x
+Grid size:256,  Samples:10000   Interp:gridfit is faster by 1.17x       Construct:scipy is faster by 1611.38x
+Grid size:384,  Samples:10000   Interp:gridfit is faster by 1.48x       Construct:scipy is faster by 2386.44x
+Grid size:512,  Samples:10000   Interp:gridfit is faster by 1.23x       Construct:scipy is faster by 5081.75x
+Grid size:1024, Samples:10000   Interp:gridfit is faster by 1.99x       Construct:scipy is faster by 61036.42x
+
+Grid size:50,   Samples:100000  Interp:gridfit is faster by 1.76x       Construct:scipy is faster by 1.03x
+Grid size:100,  Samples:100000  Interp:gridfit is faster by 1.65x       Construct:scipy is faster by 19.09x
+Grid size:200,  Samples:100000  Interp:gridfit is faster by 1.41x       Construct:scipy is faster by 115.44x
+Grid size:256,  Samples:100000  Interp:gridfit is faster by 1.47x       Construct:scipy is faster by 541.33x
+Grid size:384,  Samples:100000  Interp:gridfit is faster by 1.50x       Construct:scipy is faster by 2459.59x
+Grid size:512,  Samples:100000  Interp:gridfit is faster by 1.20x       Construct:scipy is faster by 4504.84x
+Grid size:1024, Samples:100000  Interp:gridfit is faster by 1.70x       Construct:scipy is faster by 31330.62x
 </code></pre></div>
 
 
