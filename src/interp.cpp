@@ -83,12 +83,16 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     float dpy = py - y[iy];
     float dpz = pz - z[iz];
 
+    float fx[2] = {1.0f, dpx};
+    float fy[2] = {1.0f, dpy};
+    float fz[2] = {1.0f, dpz};
+
     float px_interp = 0.0f;
     for (int i1 = 0; i1 <= 1; ++i1)
       for (int j1 = 0; j1 <= 1; ++j1)
         for (int k1 = 0; k1 <= 1; ++k1) {
           float coeff = mout[i1][j1][k1];
-          px_interp += coeff * pow(dpx, i1) * pow(dpy, j1) * pow(dpz, k1);
+          px_interp += coeff * fx[i1] * fy[j1] * fz[k1];
         }
     result[i] = px_interp;
   }

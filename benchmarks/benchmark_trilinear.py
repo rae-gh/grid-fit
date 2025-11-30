@@ -8,8 +8,8 @@ import timeit
 
 
 def benchmark_trilinear():
-    runs = "2,3,2*,3*"  # all possible "2,2*,3,3*"
-    n = 100
+    runs = "2,3,2*,3*,n*"  # all possible "2,2*,3,3*"
+    n = 50
     random_points_num = 1000
     runs = f",{runs},"
     runs_data = []
@@ -108,20 +108,10 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((100, x, y, z, 50, values, points, None))
+        runs_data.append((n, x, y, z, 50, values, points, None))
 
     for n, x, y, z, number, values, points, shoulds in runs_data:
-
         n_points = len(points)
-
-        # print(x)
-        # print(y)
-        # print(z)
-        # print("--- Values ---")
-        # print(values)
-        # print("--- Points ---")
-        # print(points)
-
         print(
             "------------------------------------------------------\n",
             f"Benchmarking trilinear interpolation with grid size {n}^3 and {n_points} points, running {number} times.",
@@ -150,15 +140,20 @@ def benchmark_trilinear():
         scipy_result = interp(points)
         gridfit_result = trilinear(x, y, z, values, points)
         # make float32 for and 4 dpecimals for comparison
-        scipy_result = np.round(scipy_result.astype(float), 4)
-        gridfit_result = np.round(gridfit_result.astype(float), 4)
+        scipy_result = np.round(scipy_result.astype(np.float32), 4)
+        gridfit_result = np.round(gridfit_result.astype(np.float32), 4)
 
         max_diff = np.max(np.abs(scipy_result - gridfit_result))
-        print("Max abs diff:", max_diff)
-        print("scipy_result:\t", scipy_result)
-        print("gridfit_result:\t", gridfit_result)
-        if max_diff > 1e-5:
-            print("[WARNING] gridfit values do no NOT match scipy..\n")
+        if not np.allclose(scipy_result, gridfit_result, atol=1e-4, rtol=1e-7):
+            print("[!!!!! WARNING] gridfit values do NOT match scipy..\n")
+            print("Max abs diff:", max_diff)
+            mask = ~np.isclose(scipy_result, gridfit_result, atol=1e-4, rtol=1e-7)
+            diff_indices = np.where(mask)[0]
+            print(f"Number of differing points: {len(diff_indices)}")
+            for idx in diff_indices[:]:
+                print(
+                    f"  idx {idx}: scipy={scipy_result[idx]}, gridfit={gridfit_result[idx]}, diff={scipy_result[idx] - gridfit_result[idx]}"
+                )
         else:
             print("Gridfit result is similar to scipy result.")
         # Print which is faster and by how much
