@@ -8,10 +8,11 @@ import timeit
 
 
 def benchmark_trilinear():
-    runs = "2,3,2*,3*"  # all possible "2,2*,3,3*"
+    runs = "2,3,2*,3*,n*"  # all possible "2,2*,3,3*"
+    n = 50
+    random_points_num = 1000
     runs = f",{runs},"
     runs_data = []
-    random_points_num = 100
     if ",2," in runs:
         x = np.arange(2)
         y = np.arange(2)
@@ -79,7 +80,7 @@ def benchmark_trilinear():
         )
         shoulds = [1, 14, 5.5, 10.0, 15.5, 14.0]
         runs_data.append((3, x, y, z, 50, values, points, shoulds))
-    if "3*," in runs:
+    if ",3*," in runs:
         x = np.arange(3)
         y = np.arange(3)
         z = np.arange(3)
@@ -93,6 +94,21 @@ def benchmark_trilinear():
             ]
         )
         runs_data.append((3, x, y, z, 50, values, points, None))
+
+    if ",n*," in runs:
+        x = np.arange(n)
+        y = np.arange(n)
+        z = np.arange(n)
+        values = np.random.rand(n, n, n)
+        n_points = random_points_num
+        points = np.column_stack(
+            [
+                np.random.uniform(np.min(x), np.max(x), n_points),
+                np.random.uniform(np.min(y), np.max(y), n_points),
+                np.random.uniform(np.min(z), np.max(z), n_points),
+            ]
+        )
+        runs_data.append((100, x, y, z, 50, values, points, None))
 
     for n, x, y, z, number, values, points, shoulds in runs_data:
 
