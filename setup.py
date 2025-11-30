@@ -4,7 +4,7 @@ from pybind11.setup_helpers import Pybind11Extension, build_ext
 ext_modules = [
     Pybind11Extension(
         "gridfit.gridfit_interp",
-        sources=["python/gridfit/interp_py.cpp", "src/interp.cpp"],
+        sources=["python/gridfit/interp_py.cpp", "src/interp.cpp", "src/gridfit.cpp"],
         include_dirs=["include"],  # pybind11 handles numpy include automatically
         language="c++",
         cxx_std=11,  # or 14, 17 depending on what you need

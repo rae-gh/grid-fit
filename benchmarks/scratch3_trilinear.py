@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 from gridfit import trilinear
+from gridfit import GridFit
 
 
 def check_trilinear():
@@ -26,8 +27,13 @@ def check_trilinear():
     scipy_result = scipy_interp(point)
     gridfit_result = trilinear(x, y, z, values, point)
 
+    gridfit = GridFit(x, y, z, values)
+    print(gridfit.details())
+    gridfit_result2 = gridfit.interpolate(point)
+
     print("scipy_result:", scipy_result)
     print("gridfit_result:", gridfit_result)
+    print("gridfit_result2:", gridfit_result2)
     print("Max abs diff:", np.max(np.abs(scipy_result - gridfit_result)))
 
 

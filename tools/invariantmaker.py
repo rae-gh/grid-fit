@@ -42,20 +42,15 @@ class InvariantMaker(object):
                 "// (c) Rachel Alcraft, 2023, Birkbeck College, London University\n\n"
             )
             shx, shy = self.alcraft.shape
-            fw.write(f"double invariant_vandermonde[{shx}][{shy}] = {{\n")
+            fw.write(f"double invariant_vandermonde[{shx}][{shy}] = {{")
             for i in range(shx):
-                fw.write("    {")
+                fw.write("\n\t")
                 for j in range(shy):
                     v = self.alcraft[i, j]
-                    if j < shy - 1:
-                        fw.write(f"{v}, ")
-                    else:
-                        fw.write(f"{v}")
-                if i < shx - 1:
-                    fw.write("},\n")
-                else:
-                    fw.write("}\n")
-            fw.write("};\n")
+                    fw.write(f"{v},\t ")
+                    if len(str(v)) > 2:
+                        fw.write("\t")
+            fw.write("\n};")
 
     def save_as_file_python(self, filename, degree):
         with open(filename, "w") as fw:

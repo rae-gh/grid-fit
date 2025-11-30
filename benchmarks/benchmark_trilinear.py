@@ -1,18 +1,15 @@
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
-from gridfit import trilinear
+from gridfit import trilinear, GridFit
 import timeit
 
 # Dummy import for your future trilinear function
 # from gridfit import trilinear
 
 
-def benchmark_trilinear():
-    runs = "2,3,2*,3*,n*"  # all possible "2,2*,3,3*"
-    n = 100
-    random_points_num = 10000
+def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*"):
     num_benches = 50
-    runs = f",{runs},"
+    runs = f",{runs},"  # all possible "2,2*,3,3*"
     runs_data = []
     if ",2," in runs:
         x = np.arange(2)
@@ -47,7 +44,7 @@ def benchmark_trilinear():
         y = np.arange(2)
         z = np.arange(2)
         values = np.random.rand(2, 2, 2)
-        n_points = random_points_num
+        n_points = sampled_points
         points = np.column_stack(
             [
                 np.random.uniform(np.min(x), np.max(x), n_points),
@@ -86,7 +83,7 @@ def benchmark_trilinear():
         y = np.arange(3)
         z = np.arange(3)
         values = np.random.rand(3, 3, 3)
-        n_points = random_points_num
+        n_points = sampled_points
         points = np.column_stack(
             [
                 np.random.uniform(np.min(x), np.max(x), n_points),
@@ -97,11 +94,11 @@ def benchmark_trilinear():
         runs_data.append((3, x, y, z, num_benches, values, points, None))
 
     if ",n*," in runs:
-        x = np.arange(n)
-        y = np.arange(n)
-        z = np.arange(n)
-        values = np.random.rand(n, n, n)
-        n_points = random_points_num
+        x = np.arange(cube_size)
+        y = np.arange(cube_size)
+        z = np.arange(cube_size)
+        values = np.random.rand(cube_size, cube_size, cube_size)
+        n_points = sampled_points
         points = np.column_stack(
             [
                 np.random.uniform(np.min(x), np.max(x), n_points),
@@ -109,7 +106,7 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((n, x, y, z, num_benches, values, points, None))
+        runs_data.append((cube_size, x, y, z, num_benches, values, points, None))
 
     for n, x, y, z, number, values, points, shoulds in runs_data:
         n_points = len(points)
@@ -129,7 +126,9 @@ def benchmark_trilinear():
         # Time gridfit: include setup if any (for fairness, same as scipy)
         def gridfit_run():
             # If trilinear has setup, put it here; otherwise just call
-            return trilinear(x, y, z, values, points)
+            gridfit = GridFit(x, y, z, values)
+            # return trilinear(x, y, z, values, points)
+            return gridfit.interpolate(points)
 
         t_gridfit = timeit.timeit(gridfit_run, number=number)
         print(f"gridfit trilinear\t\t{t_gridfit:.4f} s ({number}x)")
@@ -158,9 +157,20 @@ def benchmark_trilinear():
         # Print which is faster and by how much
         if t_gridfit < t_scipy:
             print(f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x")
+            return f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x"
         else:
             print(f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x")
+            return f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x"
 
 
 if __name__ == "__main__":
-    benchmark_trilinear()
+    # Primary benchmark - most realistic
+    grid_sizes = [100, 200, 256, 384, 512]
+    n_samples = [1000, 10000]
+    results = []
+    for gs in grid_sizes:
+        for ns in n_samples:
+            ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
+            results.append(f"Grid size: {gs}, Sampled points: {ns}\tResult: {ans}")
+
+    print("\n".join(results))
