@@ -8,8 +8,10 @@ import timeit
 
 
 def benchmark_trilinear():
-    runs = ",3,3*,"  # all possible "2,2*,3,3*,"
+    runs = "2,3,2*,3*"  # all possible "2,2*,3,3*"
+    runs = f",{runs},"
     runs_data = []
+    random_points_num = 100
     if ",2," in runs:
         x = np.arange(2)
         y = np.arange(2)
@@ -37,14 +39,13 @@ def benchmark_trilinear():
             ]
         )
         shoulds = [1, 8, 1.5, 2.0, 2.5, 14.0]
-        runs_data.append((2, 70, values, points, shoulds))
+        runs_data.append((2, x, y, z, 70, values, points, shoulds))
     if ",2*," in runs:
         x = np.arange(2)
         y = np.arange(2)
         z = np.arange(2)
         values = np.random.rand(2, 2, 2)
-        # Generate 10 random points within the grid domain
-        n_points = 10
+        n_points = random_points_num
         points = np.column_stack(
             [
                 np.random.uniform(np.min(x), np.max(x), n_points),
@@ -52,7 +53,7 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((2, 70, values, points, None))
+        runs_data.append((2, x, y, z, 70, values, points, None))
     if "3" in runs:
         x = np.arange(3)
         y = np.arange(3)
@@ -77,14 +78,13 @@ def benchmark_trilinear():
             ]
         )
         shoulds = [1, 14, 5.5, 10.0, 15.5, 14.0]
-        runs_data.append((3, 50, values, points, shoulds))
+        runs_data.append((3, x, y, z, 50, values, points, shoulds))
     if "3*," in runs:
         x = np.arange(3)
         y = np.arange(3)
         z = np.arange(3)
         values = np.random.rand(3, 3, 3)
-        # Generate 10 random points within the grid domain
-        n_points = 10
+        n_points = random_points_num
         points = np.column_stack(
             [
                 np.random.uniform(np.min(x), np.max(x), n_points),
@@ -92,19 +92,19 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((3, 50, values, points, None))
+        runs_data.append((3, x, y, z, 50, values, points, None))
 
-    for n, number, values, points, shoulds in runs_data:
+    for n, x, y, z, number, values, points, shoulds in runs_data:
 
         n_points = len(points)
 
-        print(x)
-        print(y)
-        print(z)
-        print("--- Values ---")
-        print(values)
-        print("--- Points ---")
-        print(points)
+        # print(x)
+        # print(y)
+        # print(z)
+        # print("--- Values ---")
+        # print(values)
+        # print("--- Points ---")
+        # print(points)
 
         print(
             "------------------------------------------------------\n",
@@ -114,9 +114,7 @@ def benchmark_trilinear():
         # Time scipy: include setup (interpolator creation) and evaluation
         def scipy_run():
             interp = RegularGridInterpolator((x, y, z), values)
-            result = interp(points)
-            print("\tscipy_run returned:", result)
-            return result
+            return interp(points)
 
         t_scipy = timeit.timeit(scipy_run, number=number)
         print(
@@ -126,9 +124,7 @@ def benchmark_trilinear():
         # Time gridfit: include setup if any (for fairness, same as scipy)
         def gridfit_run():
             # If trilinear has setup, put it here; otherwise just call
-            result = trilinear(x, y, z, values, points)
-            print("\tgridfit_run returned:", result)
-            return result
+            return trilinear(x, y, z, values, points)
 
         t_gridfit = timeit.timeit(gridfit_run, number=number)
         print(f"gridfit trilinear: {t_gridfit:.4f} s ({number}x)")
@@ -137,8 +133,14 @@ def benchmark_trilinear():
         interp = RegularGridInterpolator((x, y, z), values)
         scipy_result = interp(points)
         gridfit_result = trilinear(x, y, z, values, points)
+        # make float32 for and 4 dpecimals for comparison
+        scipy_result = np.round(scipy_result.astype(float), 4)
+        gridfit_result = np.round(gridfit_result.astype(float), 4)
+
         max_diff = np.max(np.abs(scipy_result - gridfit_result))
         print("Max abs diff:", max_diff)
+        print("scipy_result:\t", scipy_result)
+        print("gridfit_result:\t", gridfit_result)
         if max_diff > 1e-5:
             print("[WARNING] gridfit values do no NOT match scipy..\n")
         else:

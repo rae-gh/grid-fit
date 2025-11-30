@@ -14,6 +14,17 @@ const float mat[64] = {
      1.,-1., 0., 0.,-1., 1., 0., 0.,
      1., 0.,-1., 0.,-1., 0., 1., 0., 
     -1., 1., 1.,-1., 1.,-1.,-1., 1.};
+
+/*const float mat[64] = {
+    1, 0, 0, 0, 0, 0, 0, 0,
+    -1, 1, 0, 0, 0, 0, 0, 0,
+    -1, 0, 1, 0, 0, 0, 0, 0,
+    1, -1, -1, 1, 0, 0, 0, 0,
+    -1, 0, 0, 0, 1, 0, 0, 0,
+    1, -1, 0, 0, -1, 1, 0, 0,
+    1, 0, -1, 0, -1, 0, 1, 0,
+    -1, 1, 1, -1, 1, -1, -1, 1,
+};*/
 // clang-format on
 
 std::vector<float> interp(double a, double b, int n) {
@@ -56,25 +67,13 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     int iyu = (iy + 1 < ny) ? iy + 1 : iy;
     int izu = (iz + 1 < nz) ? iz + 1 : iz;
 
-    // Fetch the 8 corner values from the 3D grid (values is flat, C-order)
-    float v000 = values[ix * ny * nz + iy * nz + iz];
-    float v100 = values[ixu * ny * nz + iy * nz + iz];
-    float v010 = values[ix * ny * nz + iyu * nz + iz];
-    float v001 = values[ix * ny * nz + iy * nz + izu];
-    float v110 = values[ixu * ny * nz + iyu * nz + iz];
-    float v101 = values[ixu * ny * nz + iy * nz + izu];
-    float v011 = values[ix * ny * nz + iyu * nz + izu];
-    float v111 = values[ixu * ny * nz + iyu * nz + izu];
-    // declare corner values array
     float corner_values[8];
-    corner_values[0] = v000;
-    corner_values[1] = v001;
-    corner_values[2] = v010;
-    corner_values[3] = v011;
-    corner_values[4] = v100;
-    corner_values[5] = v101;
-    corner_values[6] = v110;
-    corner_values[7] = v111;
+    int idx = 0;
+    for (int dx = 0; dx <= 1; ++dx)
+      for (int dy = 0; dy <= 1; ++dy)
+        for (int dz = 0; dz <= 1; ++dz)
+          corner_values[idx++] =
+              values[(ix + dx) * ny * nz + (iy + dy) * nz + (iz + dz)];
 
     // Matrix Mult between corners and the const matrix
     float out[8] = {0};
@@ -85,14 +84,11 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     }
 
     float mout[2][2][2];
-    mout[0][0][0] = out[0];
-    mout[0][0][1] = out[1];
-    mout[0][1][0] = out[2];
-    mout[0][1][1] = out[3];
-    mout[1][0][0] = out[4];
-    mout[1][0][1] = out[5];
-    mout[1][1][0] = out[6];
-    mout[1][1][1] = out[7];
+    idx = 0;
+    for (int i1 = 0; i1 <= 1; ++i1)
+      for (int j1 = 0; j1 <= 1; ++j1)
+        for (int k1 = 0; k1 <= 1; ++k1)
+          mout[i1][j1][k1] = out[idx++];
 
     float dpx = px - x[ix];
     float dpy = py - y[iy];
@@ -103,7 +99,7 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
       for (int j1 = 0; j1 <= 1; ++j1)
         for (int k1 = 0; k1 <= 1; ++k1) {
           float coeff = mout[i1][j1][k1];
-          px_interp += coeff * pow(px, i1) * pow(py, j1) * pow(pz, k1);
+          px_interp += coeff * pow(dpx, i1) * pow(dpy, j1) * pow(dpz, k1);
         }
     result[i] = px_interp;
   }
