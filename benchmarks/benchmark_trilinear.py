@@ -12,10 +12,10 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
     runs = f",{runs},"  # all possible "2,2*,3,3*"
     runs_data = []
     if ",2," in runs:
-        x = np.arange(2)
-        y = np.arange(2)
-        z = np.arange(2)
-        values = np.random.rand(2, 2, 2)
+        x = np.arange(2, dtype=np.float32)
+        y = np.arange(2, dtype=np.float32)
+        z = np.arange(2, dtype=np.float32)
+        values = np.random.rand(2, 2, 2).astype(np.float32)
         values = np.array(
             [
                 [[1, 2], [3, 4]],
@@ -40,10 +40,10 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         shoulds = [1, 8, 1.5, 2.0, 2.5, 14.0]
         runs_data.append((2, x, y, z, num_benches, values, points, shoulds))
     if ",2*," in runs:
-        x = np.arange(2)
-        y = np.arange(2)
-        z = np.arange(2)
-        values = np.random.rand(2, 2, 2)
+        x = np.arange(2, dtype=np.float32)
+        y = np.arange(2, dtype=np.float32)
+        z = np.arange(2, dtype=np.float32)
+        values = np.random.rand(2, 2, 2).astype(np.float32)
         n_points = sampled_points
         points = np.column_stack(
             [
@@ -54,9 +54,9 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         )
         runs_data.append((2, x, y, z, num_benches, values, points, None))
     if "3" in runs:
-        x = np.arange(3)
-        y = np.arange(3)
-        z = np.arange(3)
+        x = np.arange(3, dtype=np.float32)
+        y = np.arange(3, dtype=np.float32)
+        z = np.arange(3, dtype=np.float32)
         values = np.random.rand(3, 3, 3)
         values = np.array(
             [
@@ -79,9 +79,9 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         shoulds = [1, 14, 5.5, 10.0, 15.5, 14.0]
         runs_data.append((3, x, y, z, num_benches, values, points, shoulds))
     if ",3*," in runs:
-        x = np.arange(3)
-        y = np.arange(3)
-        z = np.arange(3)
+        x = np.arange(3, dtype=np.float32)
+        y = np.arange(3, dtype=np.float32)
+        z = np.arange(3, dtype=np.float32)
         values = np.random.rand(3, 3, 3)
         n_points = sampled_points
         points = np.column_stack(
@@ -94,10 +94,10 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         runs_data.append((3, x, y, z, num_benches, values, points, None))
 
     if ",n*," in runs:
-        x = np.arange(cube_size)
-        y = np.arange(cube_size)
-        z = np.arange(cube_size)
-        values = np.random.rand(cube_size, cube_size, cube_size)
+        x = np.arange(cube_size, dtype=np.float32)
+        y = np.arange(cube_size, dtype=np.float32)
+        z = np.arange(cube_size, dtype=np.float32)
+        values = np.random.rand(cube_size, cube_size, cube_size).astype(np.float32)
         n_points = sampled_points
         points = np.column_stack(
             [
@@ -184,21 +184,16 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
 
 
 if __name__ == "__main__":
-    if False:
-        # Primary benchmark - most realistic
-        n_samples = [500, 1000, 10000, 100000]
-        grid_sizes = [50, 100, 200, 256, 384, 512, 1024]
-        results = []
-        for ns in n_samples:
-            for gs in grid_sizes:
-                ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
-                results.append(
-                    f"Grid size:{gs},\tSamples:{ns}\tInterp:{ans[0]}\tConstruct:{ans[1]}"
-                )
 
-        print("\n".join(results))
-    else:
-        ans = benchmark_trilinear(
-            cube_size=2, sampled_points=1, runs="2", print_res=True
-        )
-        print(ans)
+    # Primary benchmark - most realistic
+    n_samples = [500, 1000, 10000, 100000]
+    grid_sizes = [50, 100, 200, 256, 384, 512, 1024]
+    results = []
+    for ns in n_samples:
+        for gs in grid_sizes:
+            ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
+            results.append(
+                f"Grid size:{gs},\tSamples:{ns}\tInterp:{ans[0]}\tConstruct:{ans[1]}"
+            )
+
+    print("\n".join(results))
