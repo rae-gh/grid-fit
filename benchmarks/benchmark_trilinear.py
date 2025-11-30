@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
-from gridfit import trilinear, GridFit
+from gridfit import GridFit
 import timeit
 
 # Dummy import for your future trilinear function
@@ -8,7 +8,7 @@ import timeit
 
 
 def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*"):
-    num_benches = 50
+    num_benches = 10
     runs = f",{runs},"  # all possible "2,2*,3,3*"
     runs_data = []
     if ",2," in runs:
@@ -115,28 +115,36 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*"):
             f"Benchmark trilinear interp, grid size {n}^3 and {n_points} points, {number} times.",
         )
 
-        # Time scipy: include setup (interpolator creation) and evaluation
+        scipy_interp = RegularGridInterpolator((x, y, z), values)
+        gridfit_obj = GridFit(x, y, z, values)
+
+        def scipy_construct():
+            return RegularGridInterpolator((x, y, z), values)
+
         def scipy_run():
-            interp = RegularGridInterpolator((x, y, z), values)
-            return interp(points)
+            return scipy_interp(points)
+
+        def gridfit_construct():
+            return GridFit(x, y, z, values, order=2)
+
+        def gridfit_run():
+            return gridfit_obj.interpolate(points)
+
+        t_scipyconstruct = timeit.timeit(scipy_construct, number=number)
+        print(f"scipy RegularGridInterpolator:\t{t_scipyconstruct:.4f} s ({number}x)")
 
         t_scipy = timeit.timeit(scipy_run, number=number)
-        print(f"scipy RegularGridInterpolator:\t{t_scipy:.4f} s ({number}x)")
+        print(f"scipy points:\t{t_scipy:.4f} s ({number}x)")
 
-        # Time gridfit: include setup if any (for fairness, same as scipy)
-        def gridfit_run():
-            # If trilinear has setup, put it here; otherwise just call
-            gridfit = GridFit(x, y, z, values)
-            # return trilinear(x, y, z, values, points)
-            return gridfit.interpolate(points)
+        t_gridfitconstruct = timeit.timeit(gridfit_construct, number=number)
+        print(f"gridfit GridFit\t\t{t_gridfitconstruct:.4f} s ({number}x)")
 
         t_gridfit = timeit.timeit(gridfit_run, number=number)
-        print(f"gridfit trilinear\t\t{t_gridfit:.4f} s ({number}x)")
+        print(f"gridfit interpolate\t\t{t_gridfit:.4f} s ({number}x)")
 
-        # Optionally compare outputs for accuracy (single run, not timed)
-        interp = RegularGridInterpolator((x, y, z), values)
-        scipy_result = interp(points)
-        gridfit_result = trilinear(x, y, z, values, points)
+        # compare outputs for accuracy (single run, not timed)
+        scipy_result = scipy_interp(points)
+        gridfit_result = gridfit_obj.interpolate(points)
         # make float32 for and 4 dpecimals for comparison
         scipy_result = np.round(scipy_result.astype(np.float32), 4)
         gridfit_result = np.round(gridfit_result.astype(np.float32), 4)
@@ -155,22 +163,37 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*"):
         else:
             print("== results are equivalent ==")
         # Print which is faster and by how much
+        cons, inter = "", ""
+        if t_gridfitconstruct < t_scipyconstruct:
+            print(
+                f"gridfit is faster than scipy by {t_scipyconstruct / t_gridfitconstruct:.2f}x"
+            )
+            cons = f"gridfit is faster than scipy by {t_scipyconstruct / t_gridfitconstruct:.2f}x"
+        else:
+            print(
+                f"scipy is faster than gridfit by {t_gridfitconstruct / t_scipyconstruct:.2f}x"
+            )
+            cons = f"scipy is faster than gridfit by {t_gridfitconstruct / t_scipyconstruct:.2f}x"
+
         if t_gridfit < t_scipy:
             print(f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x")
-            return f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x"
+            inter = f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x"
         else:
             print(f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x")
-            return f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x"
+            inter = f"scipy is faster than gridfit by {t_gridfit / t_scipy:.2f}x"
+        return cons, inter
 
 
 if __name__ == "__main__":
     # Primary benchmark - most realistic
-    grid_sizes = [100, 200, 256, 384, 512]
-    n_samples = [1000, 10000]
+    n_samples = [500, 1000, 10000, 100000]
+    grid_sizes = [50, 100, 200, 256, 384]
     results = []
-    for gs in grid_sizes:
-        for ns in n_samples:
+    for ns in n_samples:
+        for gs in grid_sizes:
             ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
-            results.append(f"Grid size: {gs}, Sampled points: {ns}\tResult: {ans}")
+            results.append(
+                f"Grid size: {gs}, Sampled points: {ns}\tConstruction:{ans[0]}\tInterpolation:{ans[1]}"
+            )
 
     print("\n".join(results))

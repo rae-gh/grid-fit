@@ -35,16 +35,14 @@ std::vector<float> GridFit::interpolate(const std::vector<float> &points,
     float pz = points[i * ndim + 2];
 
     // Find lower and upper indices for each axis
-    int ix = 0, iy = 0, iz = 0;
-    while (ix + 1 < nx && x_[ix + 1] <= px)
-      ++ix;
-    while (iy + 1 < ny && y_[iy + 1] <= py)
-      ++iy;
-    while (iz + 1 < nz && z_[iz + 1] <= pz)
-      ++iz;
-    int ixu = (ix + 1 < nx) ? ix + 1 : ix;
-    int iyu = (iy + 1 < ny) ? iy + 1 : iy;
-    int izu = (iz + 1 < nz) ? iz + 1 : iz;
+    int ix = std::lower_bound(x_.begin(), x_.end(), px) - x_.begin() - 1;
+    ix = std::max(0, std::min(ix, (int)x_.size() - 2));
+
+    int iy = std::lower_bound(y_.begin(), y_.end(), py) - y_.begin() - 1;
+    iy = std::max(0, std::min(iy, (int)y_.size() - 2));
+
+    int iz = std::lower_bound(z_.begin(), z_.end(), pz) - z_.begin() - 1;
+    iz = std::max(0, std::min(iz, (int)z_.size() - 2));
 
     float corner_values[8];
     int idx = 0;
