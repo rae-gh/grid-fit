@@ -9,8 +9,9 @@ import timeit
 
 def benchmark_trilinear():
     runs = "2,3,2*,3*,n*"  # all possible "2,2*,3,3*"
-    n = 50
-    random_points_num = 1000
+    n = 100
+    random_points_num = 10000
+    num_benches = 50
     runs = f",{runs},"
     runs_data = []
     if ",2," in runs:
@@ -40,7 +41,7 @@ def benchmark_trilinear():
             ]
         )
         shoulds = [1, 8, 1.5, 2.0, 2.5, 14.0]
-        runs_data.append((2, x, y, z, 70, values, points, shoulds))
+        runs_data.append((2, x, y, z, num_benches, values, points, shoulds))
     if ",2*," in runs:
         x = np.arange(2)
         y = np.arange(2)
@@ -54,7 +55,7 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((2, x, y, z, 70, values, points, None))
+        runs_data.append((2, x, y, z, num_benches, values, points, None))
     if "3" in runs:
         x = np.arange(3)
         y = np.arange(3)
@@ -79,7 +80,7 @@ def benchmark_trilinear():
             ]
         )
         shoulds = [1, 14, 5.5, 10.0, 15.5, 14.0]
-        runs_data.append((3, x, y, z, 50, values, points, shoulds))
+        runs_data.append((3, x, y, z, num_benches, values, points, shoulds))
     if ",3*," in runs:
         x = np.arange(3)
         y = np.arange(3)
@@ -93,7 +94,7 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((3, x, y, z, 50, values, points, None))
+        runs_data.append((3, x, y, z, num_benches, values, points, None))
 
     if ",n*," in runs:
         x = np.arange(n)
@@ -108,13 +109,13 @@ def benchmark_trilinear():
                 np.random.uniform(np.min(z), np.max(z), n_points),
             ]
         )
-        runs_data.append((n, x, y, z, 50, values, points, None))
+        runs_data.append((n, x, y, z, num_benches, values, points, None))
 
     for n, x, y, z, number, values, points, shoulds in runs_data:
         n_points = len(points)
         print(
             "------------------------------------------------------\n",
-            f"Benchmarking trilinear interpolation with grid size {n}^3 and {n_points} points, running {number} times.",
+            f"Benchmark trilinear interp, grid size {n}^3 and {n_points} points, {number} times.",
         )
 
         # Time scipy: include setup (interpolator creation) and evaluation
@@ -123,9 +124,7 @@ def benchmark_trilinear():
             return interp(points)
 
         t_scipy = timeit.timeit(scipy_run, number=number)
-        print(
-            f"scipy RegularGridInterpolator (n={n}, points={n_points}): {t_scipy:.4f} s ({number}x)"
-        )
+        print(f"scipy RegularGridInterpolator:\t{t_scipy:.4f} s ({number}x)")
 
         # Time gridfit: include setup if any (for fairness, same as scipy)
         def gridfit_run():
@@ -133,7 +132,7 @@ def benchmark_trilinear():
             return trilinear(x, y, z, values, points)
 
         t_gridfit = timeit.timeit(gridfit_run, number=number)
-        print(f"gridfit trilinear: {t_gridfit:.4f} s ({number}x)")
+        print(f"gridfit trilinear\t\t{t_gridfit:.4f} s ({number}x)")
 
         # Optionally compare outputs for accuracy (single run, not timed)
         interp = RegularGridInterpolator((x, y, z), values)
@@ -155,7 +154,7 @@ def benchmark_trilinear():
                     f"  idx {idx}: scipy={scipy_result[idx]}, gridfit={gridfit_result[idx]}, diff={scipy_result[idx] - gridfit_result[idx]}"
                 )
         else:
-            print("Gridfit result is similar to scipy result.")
+            print("== results are equivalent ==")
         # Print which is faster and by how much
         if t_gridfit < t_scipy:
             print(f"gridfit is faster than scipy by {t_scipy / t_gridfit:.2f}x")

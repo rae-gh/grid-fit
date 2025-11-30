@@ -87,13 +87,19 @@ trilinear(const std::vector<float> &x, const std::vector<float> &y,
     float fy[2] = {1.0f, dpy};
     float fz[2] = {1.0f, dpz};
 
-    float px_interp = 0.0f;
+    // Precompute all 8 products of fx, fy, fz
+    float prod[8];
+    int pidx = 0;
     for (int i1 = 0; i1 <= 1; ++i1)
       for (int j1 = 0; j1 <= 1; ++j1)
-        for (int k1 = 0; k1 <= 1; ++k1) {
-          float coeff = mout[i1][j1][k1];
-          px_interp += coeff * fx[i1] * fy[j1] * fz[k1];
-        }
+        for (int k1 = 0; k1 <= 1; ++k1)
+          prod[pidx++] = fx[i1] * fy[j1] * fz[k1];
+
+    // Unroll the interpolation sum
+    float px_interp = 0.0f;
+    for (int idxu = 0; idxu < 8; ++idxu) {
+      px_interp += mout[idxu / 4][(idxu / 2) % 2][idxu % 2] * prod[idxu];
+    }
     result[i] = px_interp;
   }
   return result;
