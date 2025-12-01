@@ -1,4 +1,9 @@
 site_name: grid-fit Documentation
+site_description: Documentation for grid-fit - fast grid interpolation
+site_author: Rachel Alcraft
+repo_url: https://github.com/rae-gh/grid-fit
+repo_name: alcraft/grid-fit
+
 nav:
   - Home: index.md
   - Bindings: bindings.md
