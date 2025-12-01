@@ -4,6 +4,27 @@ import sys
 import numpy as np
 import scipy
 
+
+# Add to system info:
+import subprocess
+
+def get_blas_info():
+    """Check which BLAS numpy is using"""
+    try:
+        config = np.__config__.show()
+        return str(config)
+    except:
+        return "unknown"
+
+def get_compiler_info():
+    """Get C++ compiler used for your library"""
+    # However you check this for gridfit
+    return {
+        'compiler': 'g++',  # or 'clang++' or 'MSVC'
+        'version': '11.4.0',
+        'flags': '-O3 -march=native',  # optimization flags used
+    }
+
 def get_system_info():
     """Collect comprehensive system information for benchmark documentation"""
     
@@ -34,6 +55,9 @@ def get_system_info():
         # Hostname (useful for HPC vs laptop identification)
         'hostname': platform.node(),
     }
+
+    info['blas_backend'] = get_blas_info()
+    info['gridfit_compiler'] = get_compiler_info()
     
     return info
 
