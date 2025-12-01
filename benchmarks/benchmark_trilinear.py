@@ -11,8 +11,7 @@ from sysinfo import get_system_info
 # from gridfit import trilinear
 
 
-def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=False):
-    num_benches = 10
+def benchmark_trilinear(cube_size=10, sampled_points=10, num_benches=10, runs="n*", print_res=False):        
     runs = f",{runs},"  # all possible "2,2*,3,3*"
     runs_data = []
     if ",2," in runs:
@@ -137,8 +136,8 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         
         benchmark_result = {
                 'grid_size': n,
-                'n_samples': n_points,
-                'n_queries': number,
+                'n_interp_points': n_points,
+                'n_repetitions': number,
                 'gridfit_construct_time': "",
                 'scipy_construct_time': "",
                 'gridfit_interp_time': "",
@@ -214,8 +213,9 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
 if __name__ == "__main__":
 
     # Primary benchmark - most realistic
-    n_samples = [500, 1000, 10000, 100000]
-    grid_sizes = [50, 100, 200, 256]#, 384, 512, 1024]
+    benches = [10]
+    sampled_points_list = [100, 1000, 10000, 100000]
+    cube_sizes = [50, 100, 256, 512, 1024]
     
     results = {
         'metadata': {
@@ -226,9 +226,10 @@ if __name__ == "__main__":
         'benchmarks': []
     }
 
-    for ns in n_samples:
-        for gs in grid_sizes:
-            ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
+    for nb in benches:
+        for ns in sampled_points_list:
+            for gs in cube_sizes:
+                ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, num_benches=nb, runs="n*")
 
             results['benchmarks'].append(ans)
 
