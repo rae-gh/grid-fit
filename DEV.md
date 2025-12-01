@@ -13,7 +13,7 @@
 	```bash
 	conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 -y
 	conda activate gridfit-dev
-	conda install -c conda-forge pybind11 pytest numpy scipy -y
+	conda install -c conda-forge pybind11 pytest numpy scipy psutil -y
 	Rscript -e 'install.packages("devtools")'
 	```
 3. **Run the install script:**

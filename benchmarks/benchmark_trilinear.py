@@ -1,7 +1,11 @@
+from datetime import datetime
+import json
 import numpy as np
 from scipy.interpolate import RegularGridInterpolator
 from gridfit import GridFit
 import timeit
+import platform
+from sysinfo import get_system_info
 
 # Dummy import for your future trilinear function
 # from gridfit import trilinear
@@ -130,17 +134,34 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         def gridfit_run():
             return gridfit_obj.interpolate(points)
 
+        
+        benchmark_result = {
+                'grid_size': n,
+                'n_samples': n_points,
+                'n_queries': number,
+                'gridfit_construct_time': "",
+                'scipy_construct_time': "",
+                'gridfit_interp_time': "",
+                'scipy_interp_time': "",
+                'max_error': "",
+                'mean_error': "",
+            }
+        
         t_scipyconstruct = timeit.timeit(scipy_construct, number=number)
         print(f"scipy RegularGridInterpolator:\t{t_scipyconstruct:.4f} s ({number}x)")
+        benchmark_result['scipy_construct_time'] = t_scipyconstruct
 
         t_scipy = timeit.timeit(scipy_run, number=number)
         print(f"scipy points:\t{t_scipy:.4f} s ({number}x)")
+        benchmark_result['scipy_interp_time'] = t_scipy
 
         t_gridfitconstruct = timeit.timeit(gridfit_construct, number=number)
         print(f"gridfit GridFit\t\t{t_gridfitconstruct:.4f} s ({number}x)")
+        benchmark_result['gridfit_construct_time'] = t_gridfitconstruct
 
         t_gridfit = timeit.timeit(gridfit_run, number=number)
         print(f"gridfit interpolate\t\t{t_gridfit:.4f} s ({number}x)")
+        benchmark_result['gridfit_interp_time'] = t_gridfit
 
         # compare outputs for accuracy (single run, not timed)
         scipy_result = scipy_interp(points)
@@ -148,6 +169,12 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         # make float32 for and 4 dpecimals for comparison
         scipy_result = np.round(scipy_result.astype(np.float32), 4)
         gridfit_result = np.round(gridfit_result.astype(np.float32), 4)
+
+        differences = np.abs(gridfit_result - scipy_result)
+        max_error = np.max(differences)
+        mean_error = np.mean(differences)
+        benchmark_result['max_error'] = float(max_error)
+        benchmark_result['mean_error'] = float(mean_error)
 
         max_diff = np.max(np.abs(scipy_result - gridfit_result))
         if not np.allclose(scipy_result, gridfit_result, atol=1e-4, rtol=1e-7):
@@ -180,20 +207,40 @@ def benchmark_trilinear(cube_size=10, sampled_points=10, runs="n*", print_res=Fa
         else:
             print(f"scipy is faster by {t_gridfit / t_scipy:.2f}x")
             inter = f"scipy is faster by {t_gridfit / t_scipy:.2f}x"
-        return inter, cons
+        
+        return benchmark_result
 
 
 if __name__ == "__main__":
 
     # Primary benchmark - most realistic
     n_samples = [500, 1000, 10000, 100000]
-    grid_sizes = [50, 100, 200, 256, 384, 512, 1024]
-    results = []
+    grid_sizes = [50, 100, 200, 256]#, 384, 512, 1024]
+    
+    results = {
+        'metadata': {
+            'system': get_system_info(),
+            'timestamp': datetime.now().isoformat(),
+            'benchmark_version': '1.0',
+        },
+        'benchmarks': []
+    }
+
     for ns in n_samples:
         for gs in grid_sizes:
             ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, runs="n*")
-            results.append(
-                f"Grid size:{gs},\tSamples:{ns}\tInterp:{ans[0]}\tConstruct:{ans[1]}"
-            )
 
-    print("\n".join(results))
+            results['benchmarks'].append(ans)
+
+    print(results)
+
+    # Save with descriptive filename
+    hostname = platform.node().split('.')[0]  # short hostname
+    filename = f'benchmark_results_{hostname}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.json'
+    
+    with open(filename, 'w') as f:
+        json.dump(results, f, indent=2)
+    
+    print(f"Results saved to {filename}")
+    
+    

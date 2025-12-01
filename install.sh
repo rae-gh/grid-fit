@@ -3,6 +3,9 @@
 # Run from the project root
 set -e
 
+# Set GRIDFIT_ROOT for R build
+export GRIDFIT_ROOT=$(pwd)
+
 # Clean previous builds
 if [ -d lib ]; then
     echo "Cleaning C++ static library..."

@@ -1,4 +1,7 @@
 
+# Use environment variable set by install.sh
+GRIDFIT_ROOT = $(shell echo $$GRIDFIT_ROOT)
 # Use absolute path for include and link to static library
-PKG_CPPFLAGS = -I/home/rachel/PHD/UTILS/grid-fit/include
-PKG_LIBS = /home/rachel/PHD/UTILS/grid-fit/lib/libgridfit.a
+PKG_CPPFLAGS = -I$(GRIDFIT_ROOT)/include
+PKG_LIBS = $(GRIDFIT_ROOT)/lib/libgridfit.a
+
