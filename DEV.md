@@ -13,8 +13,8 @@
 	```bash
 	conda create -n gridfit-dev -c conda-forge python=3.10 cmake make gxx_linux-64 -y
 	conda activate gridfit-dev
-	conda install -c conda-forge pybind11 pytest numpy scipy psutil -y
-	Rscript -e 'install.packages("devtools")'
+	conda install -c conda-forge pybind11 pytest numpy scipy psutil r-devtools -y	
+    Rscript -e "install.packages(c('Rcpp'), repos='https://cloud.r-project.org')"
 	```
 3. **Run the install script:**
 	```bash
