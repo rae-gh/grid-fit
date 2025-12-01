@@ -26,7 +26,10 @@ This script compares the performance of the standard Python method (`scipy.inter
 
 Results are a work in progress. The trilinear method is faster than scipy at both construction and interpolation.
 Derivatives, slices and tricubic to follow...
-<img width="4046" height="2850" alt="benchmark_analysis" src="https://github.com/user-attachments/assets/b90907aa-2f5b-4ad4-9f5d-35ffd1cac8e9" />
+### Benchmark Results Summary
+image below shows the benchmark results for various grid sizes and sample counts.
+
+![benchmarking results](streamlined_analysis.png)
 
 ```
 Grid size:50,   Samples:500     Interp:gridfit is faster by 5.12x       Construct:gridfit is faster by 4.38x
