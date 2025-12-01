@@ -230,8 +230,7 @@ if __name__ == "__main__":
         for ns in sampled_points_list:
             for gs in cube_sizes:
                 ans = benchmark_trilinear(cube_size=gs, sampled_points=ns, num_benches=nb, runs="n*")
-
-            results['benchmarks'].append(ans)
+                results['benchmarks'].append(ans)
 
     print(results)
 
